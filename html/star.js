@@ -281,6 +281,7 @@ function loop() {
                 }
             break;
         case "bRainbowAll":
+                let colorAngle = angle * 4;
                 setAllColors("hsl(" + (colorAngle % 360) + ",90%,50%)", false);
             break;
         case "bWalk1":

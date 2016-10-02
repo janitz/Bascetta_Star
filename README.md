@@ -12,6 +12,7 @@ the project includes a lot parts:
  - json (to send the current state of the star to the browser)
  - lua (for programming the esp8266)
  - vbs (for creating the 3d model of the star) 
+ - sh (for fast starting a webserver in python)
 
 # Pictures
 
@@ -21,4 +22,11 @@ the project includes a lot parts:
 <img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/white_0.jpeg" width="250" height="250">
 <img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/white_1.jpeg" width="250" height="250">
 <img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/rainbow_0.jpeg" width="250" height="250">
+<img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/webpage_0.png" width="250">
+<img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/webpage_1.png" width="250">
+<img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/webpage_2.png" width="250">
+<img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/webpage_3.png" width="250">
+<img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/webpage_4.png" width="250">
+<img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/webpage_5.png" width="250">
+
 
