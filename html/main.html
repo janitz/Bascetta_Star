@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+        <link rel="stylesheet" href="main.css">
+        <script type="text/javascript" src="star.js" defer></script>
+        <script type="text/javascript" src="menu.js" defer></script>
+    </head>
+
+    <body> 
+        <div>
+            <canvas id="star" height="500px" width="500px"></canvas>
+        </div>
+        
+        <!-- for testing -->
+        <div id="console" style="color:green;"></div>
+
+        <div class="menu">
+            
+            <button class="btn l0" id="bColors">Colors</button>
+            <div class="panel l0" id="pColors">
+                <button class="btn l1" id="bBlack">Black</button>
+                <button class="btn l1" id="bWhite">White</button>
+                <button class="btn l1" id="bRed"><span>Red</span></button>
+                <button class="btn l1" id="bOrange">Orange</button>
+                <button class="btn l1" id="bYellow">Yellow</button>
+                <button class="btn l1" id="bGreen">Green</button>
+                <button class="btn l1" id="bCyan">Cyan</button>
+                <button class="btn l1" id="bBlue">Blue</button>
+                <button class="btn l1" id="bPurple">Purple</button>
+                <button class="btn l1" id="bMagenta">Magenta</button>                
+            </div>
+
+            <button class="btn l0" id="bAnimation">Animations</button>
+            <div class="panel l0" id="pAnimation">
+                <button class="btn l1" id="bRainbow">Rainbow</button>
+                <div class="panel l1" id="pRainbow">
+                    <button class="btn l2" id="bRainbowHor">Horizontal</button>
+                    <button class="btn l2" id="bRainbowVer">Vertical</button>
+                    <button class="btn l2" id="bRainbowAll">All</button>
+                </div>
+                <button class="btn l1" id="bFade">Fade</button>
+                <div class="panel l1" id="pFade">
+                    <button class="btn l2" id="bFade2">Last 2 Colors</button>
+                    <button class="btn l2" id="bFade3">Last 3 Colors</button>
+                    <button class="btn l2" id="bFade4">Last 4 Colors</button>
+                </div>
+                <button class="btn l1" id="bWave">Wave</button>
+                <div class="panel l1" id="pWave">
+                    <button class="btn l2" id="bWaveHor">Horizontal</button>
+                    <button class="btn l2" id="bWaveVer">Vertical</button>
+                </div>
+                <button class="btn l1" id="bWalk">Walk</button>
+                <div class="panel l1" id="pWalk">
+                    <button class="btn l2" id="bWalk1">1 Jag</button>
+                    <button class="btn l2" id="bWalk2">2 Jags</button>
+                </div>
+                <button class="btn l1" id="bRnd">Random Jags</button>
+                <div class="panel l1" id="pRnd">
+                    <button class="btn l2" id="bRnd2">Last 2 Colors</button>
+                    <button class="btn l2" id="bRnd3">Last 3 Colors</button>
+                    <button class="btn l2" id="bRnd4">Last 4 Colors</button>
+                </div>
+
+            </div>
+        </div>
+        <div>
+            <br><br><br><br><br><br>
+        </div>
+    </body>
+</html>
+
+
+
+
+
+
+let Color1 = new HSL("hsl(0,100%,20%)");
+let Color2 = new HSL("hsl(120,100%,80%)");
+starColor = Color1.toString();
+
+loop()
+function loop() {
+    requestAnimationFrame(loop);
+    angle += 0.25;
+    if(angle > 360) angle -= 360;
+
+    if(angle % 90 === 0){
+        [Color1, Color2] = [Color2, Color1];
+    }
+    if(angle % 90 > 40){
+        starColor = Color1.fadeTo(Color2, ((angle % 90)-40) * 2)
+    }
+
+    fig.drawFigure(angle);
+}
