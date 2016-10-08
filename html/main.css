@@ -1,16 +1,30 @@
 body{
-    background:black; 
-    text-align:center;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background: url(bg.svg); 
+    background-size: cover; 
 }
 
-div.menu {
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    background: linear-gradient(rgb(5,5,10) 80%, transparent 100%);
+}
+
+#menu {
+    position: relative;
+    background: rgba(128,128,128,0.4);
+    z-index: 1;
     width:80%;
-    margin: 0 10%;
+    margin: 0 10% 100px 10%;
 }
 
 button.btn {
-    background-color: #202020;
-    color: #dddddd;
+    background: transparent;
     cursor: pointer;
     padding: 18px;
     width: 100%;
@@ -18,27 +32,47 @@ button.btn {
     border: none;
     outline: none;
     transition: 0.4s;
+    font-family: helvetica;
+	font-size: 20px;
+	color: #dddddd;
 }
 
-/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-button.btn.active, button.btn:hover {
-    background-color: #404040;
+button.tab {
+    text-align: center;
+    color: rgba(200,200,200,0.5);
+    background: rgba(0,0,0,0.4);
+    margin: 0;
+    padding: 18px;
+    width: 50%;
 }
 
-/* Style the btn panel. Note: hidden by default */
-div.panel {
-    padding:0 0 0 18px;
-    text-align: left;
-    background-color: #303030;
-    max-height: 0;
-    overflow: hidden;
-    transition: 0.6s ease-in-out;
-    opacity: 0;
+button.tab.active {
+    color: rgb(200,200,200);
+    background: linear-gradient(rgba(0,0,0,0.2), transparent);
 }
 
-/* The "show" class is added to the accordion panel when the user clicks on one of the buttons. This will show the panel content */
-div.panel.show {
-    opacity: 1;
-    max-height: 500px;
+button.sub.active {
+    color: rgb(200,200,200);
+    background: linear-gradient(rgba(128,128,128,0.2), rgba(128,128,128,0.4));
 }
+
+@keyframes fadeTab {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+div.page {
+    display: none;
+    padding:0;
+    text-align: center;
+    width: 100%;
+    animation: fadeTab 1s linear;    
+}
+div.page.panel {
+    margin: 0 0 0 10%;
+    width: 90%;
+    
+    background:rgba(128,128,128,0.4);    
+}
+
 

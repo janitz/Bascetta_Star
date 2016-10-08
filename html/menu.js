@@ -1,4 +1,27 @@
-let cmds = ["bRainbowAll", "bRainbowHor", "bRainbowVer", "bWalk1", "bWalk2", "bBlack", "bWhite", "bRed", "bOrange", "bYellow", "bGreen", "bCyan", "bBlue", "bPurple", "bMagenta"];
+let colBtns = document.getElementsByClassName("col");
+
+for(let i = 0; i < colBtns.length; i++){
+       colBtns[i].style.borderLeftColor = colBtns[i].innerHTML;
+       colBtns[i].style.borderLeftStyle = "solid";
+       colBtns[i].style.borderLeftWidth = "30px";          
+}
+
+let cmds = [
+    "bRainbowAll", 
+    "bRainbowHor", 
+    "bRainbowVer", 
+    "bWalk1", 
+    "bWalk2", 
+    "bBlack", 
+    "bWhite", 
+    "bRed", 
+    "bOrange", 
+    "bYellow", 
+    "bGreen", 
+    "bCyan", 
+    "bBlue", 
+    "bPurple", 
+    "bMagenta"];
 
 addOnClick();
 
@@ -8,26 +31,42 @@ function addOnClick(){
         btns[i].setAttribute("onclick", "buttonClicked(this);");
     }
 }
-function buttonClicked(sender) {
-    let pan = document.getElementById("p" + sender.id.slice(1));
-    let add = false;
-    if (pan) add = !pan.classList.contains("show");
 
-    let btnLevel = getLevel(sender);
-    let pans = document.getElementsByClassName("panel")
-    for (i = 0; i < pans.length; i++) {
-        if(btnLevel <= getLevel(pans[i])) pans[i].classList.remove("show");
+function buttonClicked(sender) {
+    let pan, pans, btns;
+
+    if (sender.classList.contains("tab")){
+        pans = document.getElementsByClassName("page");
+        for (let i = 0; i < pans.length; i++) pans[i].style.display = "none";
+        
+        btns = document.getElementsByClassName("tab");
+        for (let i = 0; i < btns.length; i++) btns[i].className = btns[i].className.replace(" active", "");
+        
+        btns = document.getElementsByClassName("sub");
+        for (let i = 0; i < btns.length; i++) btns[i].className = btns[i].className.replace(" active", "");
+        
+        pan = document.getElementById("p" + sender.id.slice(1));
+        pan.style.display = "block";
+
+        sender.classList.add("active");
+    }
+    if (sender.classList.contains("sub")){
+        let activate = !sender.classList.contains("active");
+
+        pans = document.getElementsByClassName("panel");
+        for (let i = 0; i < pans.length; i++) pans[i].style.display = "none";
+        
+        btns = document.getElementsByClassName("sub");
+        for (let i = 0; i < btns.length; i++) btns[i].className = btns[i].className.replace(" active", "");
+        
+        if (activate){
+            pan = document.getElementById("p" + sender.id.slice(1));
+            pan.style.display = "block";
+            
+            sender.classList.add("active");
+        }
+        
     }
 
-    if (add) pan.classList.add("show");
-    
     if(~cmds.indexOf(sender.id)) cmd = sender.id;
-}
-
-function getLevel(obj){
-    if (obj.classList.contains("l0")) return 0;
-    if (obj.classList.contains("l1")) return 1;
-    if (obj.classList.contains("l2")) return 2;
-    if (obj.classList.contains("l3")) return 3;
-    return -1;
 }

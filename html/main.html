@@ -10,58 +10,64 @@
     </head>
 
     <body> 
-        <div>
+        <div id="header">
             <canvas id="star" height="500px" width="500px"></canvas>
         </div>
         
         <!-- for testing -->
         <div id="console" style="color:green;"></div>
 
-        <div class="menu">
+        <div id="menu">
             
-            <button class="btn l0" id="bColors">Colors</button>
-            <div class="panel l0" id="pColors">
-                <button class="btn l1" id="bBlack">Black</button>
-                <button class="btn l1" id="bWhite">White</button>
-                <button class="btn l1" id="bRed"><span>Red</span></button>
-                <button class="btn l1" id="bOrange">Orange</button>
-                <button class="btn l1" id="bYellow">Yellow</button>
-                <button class="btn l1" id="bGreen">Green</button>
-                <button class="btn l1" id="bCyan">Cyan</button>
-                <button class="btn l1" id="bBlue">Blue</button>
-                <button class="btn l1" id="bPurple">Purple</button>
-                <button class="btn l1" id="bMagenta">Magenta</button>                
+            <button class="btn tab active" id="bColors">Colors</button><button class="btn tab" id="bAnimation">Animations</button>
+            
+            <div class="page" id="pColors" style="display:block">
+                <button class="btn col" id="bBlack">Black</button>
+                <button class="btn col" id="bWhite">White</button>
+                <button class="btn col" id="bRed">Red</button>
+                <button class="btn col" id="bOrange">Orange</button>
+                <button class="btn col" id="bYellow">Yellow</button>
+                <button class="btn col" id="bGreen">Green</button>
+                <button class="btn col" id="bCyan">Cyan</button>
+                <button class="btn col" id="bBlue">Blue</button>
+                <button class="btn col" id="bPurple">Purple</button>
+                <button class="btn col" id="bMagenta">Magenta</button>                
             </div>
 
-            <button class="btn l0" id="bAnimation">Animations</button>
-            <div class="panel l0" id="pAnimation">
-                <button class="btn l1" id="bRainbow">Rainbow</button>
-                <div class="panel l1" id="pRainbow">
-                    <button class="btn l2" id="bRainbowHor">Horizontal</button>
-                    <button class="btn l2" id="bRainbowVer">Vertical</button>
-                    <button class="btn l2" id="bRainbowAll">All</button>
+            <div class="page" id="pAnimation">
+                <button class="btn sub" id="bRainbow">Rainbow</button>
+                <div class="page panel" id="pRainbow">
+                    <button class="btn" id="bRainbowHor">Horizontal</button>
+                    <button class="btn" id="bRainbowVer">Vertical</button>
+                    <button class="btn" id="bRainbowAll">All</button>
                 </div>
-                <button class="btn l1" id="bFade">Fade</button>
-                <div class="panel l1" id="pFade">
-                    <button class="btn l2" id="bFade2">Last 2 Colors</button>
-                    <button class="btn l2" id="bFade3">Last 3 Colors</button>
-                    <button class="btn l2" id="bFade4">Last 4 Colors</button>
+                <button class="btn sub" id="bFade">Fade</button>
+                <div class="page panel" id="pFade">
+                    <button class="btn" id="bFade2">Last 2 Colors</button>
+                    <button class="btn" id="bFade3">Last 3 Colors</button>
+                    <button class="btn" id="bFade4">Last 4 Colors</button>
                 </div>
-                <button class="btn l1" id="bWave">Wave</button>
-                <div class="panel l1" id="pWave">
-                    <button class="btn l2" id="bWaveHor">Horizontal</button>
-                    <button class="btn l2" id="bWaveVer">Vertical</button>
+                <button class="btn sub" id="bWave">Wave</button>
+                <div class="page panel" id="pWave">
+                    <button class="btn" id="bWaveHor">Horizontal</button>
+                    <button class="btn" id="bWaveVer">Vertical</button>
                 </div>
-                <button class="btn l1" id="bWalk">Walk</button>
-                <div class="panel l1" id="pWalk">
-                    <button class="btn l2" id="bWalk1">1 Jag</button>
-                    <button class="btn l2" id="bWalk2">2 Jags</button>
+                <button class="btn sub" id="bWalk">Walk</button>
+                <div class="page panel" id="pWalk">
+                    <button class="btn" id="bWalk1">1 Jag</button>
+                    <button class="btn" id="bWalk2">2 Jags</button>
                 </div>
-                <button class="btn l1" id="bRnd">Random Jags</button>
-                <div class="panel l1" id="pRnd">
-                    <button class="btn l2" id="bRnd2">Last 2 Colors</button>
-                    <button class="btn l2" id="bRnd3">Last 3 Colors</button>
-                    <button class="btn l2" id="bRnd4">Last 4 Colors</button>
+                <button class="btn sub" id="bRnd">Random Jags</button>
+                <div class="page panel" id="pRnd">
+                    <button class="btn" id="bRnd2">Last 2 Colors</button>
+                    <button class="btn" id="bRnd3">Last 3 Colors</button>
+                    <button class="btn" id="bRnd4">Last 4 Colors</button>
+                </div>
+                <button class="btn sub" id="bSpiral">Spiral</button>
+                <div class="page panel" id="pSpiral">
+                    <button class="btn" id="bSpiral2">Last 2 Colors</button>
+                    <button class="btn" id="bSpiral3">Last 3 Colors</button>
+                    <button class="btn" id="bSpiral4">Last 4 Colors</button>
                 </div>
 
             </div>
@@ -73,26 +79,3 @@
 </html>
 
 
-
-
-
-
-let Color1 = new HSL("hsl(0,100%,20%)");
-let Color2 = new HSL("hsl(120,100%,80%)");
-starColor = Color1.toString();
-
-loop()
-function loop() {
-    requestAnimationFrame(loop);
-    angle += 0.25;
-    if(angle > 360) angle -= 360;
-
-    if(angle % 90 === 0){
-        [Color1, Color2] = [Color2, Color1];
-    }
-    if(angle % 90 > 40){
-        starColor = Color1.fadeTo(Color2, ((angle % 90)-40) * 2)
-    }
-
-    fig.drawFigure(angle);
-}

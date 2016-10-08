@@ -1,12 +1,14 @@
 let canv = document.getElementById("star");
+let menu = document.getElementById("menu");
+let lastCanvSize = 0;
 let ctx = canv.getContext("2d");
 let perspective = {x:canv.width/2, y:0, z:-1000};
 let angle = 0;
 let points;
 let colors = [];
 let lastColors = ["hsl(0,100%,50%)","hsl(240,100%,50%)","hsl(60,100%,50%)"];
-setAllColors("hsl(0,0%,10%)")
-let cmd = "bRainbowVer";
+setAllColors("hsl(0,0%,20%)")
+let cmd = "bRainbowHor";
 
 
 
@@ -312,7 +314,7 @@ function loop() {
             }
             break;
         case "bBlack":
-            setAllColors("hsl(0,0%,10%)", true);
+            setAllColors("hsl(0,0%,20%)", true);
             break;
         case "bWhite":
             setAllColors("hsl(0,0%,100%)", true);
@@ -363,8 +365,14 @@ window.addEventListener('resize', resize, false);
 function resize() {
     let size = window.innerWidth * 0.8 ;
     if (size > 500) size = 500;
-    if (size > window.innerHeight / 2) size = window.innerHeight / 2;
+    if (size > window.innerHeight / 3) size = window.innerHeight / 3;
+    if (size < 10) size = 10;
+    if (Math.abs((lastCanvSize-size)/size) > 0.25){
         canv.style.width = size+'px';
         canv.style.height = size+'px';
+        menu.style.top = size+'px';
+        lastCanvSize = size;
+    }
+    
 }
 
