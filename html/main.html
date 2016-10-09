@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
         <link rel="stylesheet" href="main.css">
+        <script type="text/javascript" src="resize.js" defer></script>
         <script type="text/javascript" src="star.js" defer></script>
         <script type="text/javascript" src="menu.js" defer></script>
     </head>
@@ -14,12 +15,9 @@
             <canvas id="star" height="500px" width="500px"></canvas>
         </div>
         
-        <!-- for testing -->
-        <div id="console" style="color:green;"></div>
-
         <div id="menu">
             
-            <button class="btn tab active" id="bColors">Colors</button><button class="btn tab" id="bAnimation">Animations</button>
+            <button class="btn tab active" id="bColors">Colors</button><button class="btn tab" id="bAnimations">Animations</button>
             
             <div class="page" id="pColors" style="display:block">
                 <button class="btn col" id="bBlack">Black</button>
@@ -34,7 +32,7 @@
                 <button class="btn col" id="bMagenta">Magenta</button>                
             </div>
 
-            <div class="page" id="pAnimation">
+            <div class="page" id="pAnimations">
                 <button class="btn sub" id="bRainbow">Rainbow</button>
                 <div class="page panel" id="pRainbow">
                     <button class="btn" id="bRainbowHor">Horizontal</button>
@@ -74,6 +72,10 @@
         </div>
         <div>
             <br><br><br><br><br><br>
+              <!-- for testing -->
+              <div id="console" style="color:green;">foo</div>
+
+      
         </div>
     </body>
 </html>

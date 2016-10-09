@@ -1,6 +1,4 @@
 let canv = document.getElementById("star");
-let menu = document.getElementById("menu");
-let lastCanvSize = 0;
 let ctx = canv.getContext("2d");
 let perspective = {x:canv.width/2, y:0, z:-1000};
 let angle = 0;
@@ -357,22 +355,5 @@ function setAllColors(str, addToLast){
         lastColors[0] = str;
     }
     for (let i = 0; i < 20; i++) colors[i] = str;
-}
-
-
-window.addEventListener('load', resize, false);
-window.addEventListener('resize', resize, false);
-function resize() {
-    let size = window.innerWidth * 0.8 ;
-    if (size > 500) size = 500;
-    if (size > window.innerHeight / 3) size = window.innerHeight / 3;
-    if (size < 10) size = 10;
-    if (Math.abs((lastCanvSize-size)/size) > 0.25){
-        canv.style.width = size+'px';
-        canv.style.height = size+'px';
-        menu.style.top = size+'px';
-        lastCanvSize = size;
-    }
-    
 }
 

@@ -1,11 +1,13 @@
-let colBtns = document.getElementsByClassName("col");
 
+//colored square on the left side of the color buttons
+let colBtns = document.getElementsByClassName("col");
 for(let i = 0; i < colBtns.length; i++){
        colBtns[i].style.borderLeftColor = colBtns[i].innerHTML;
        colBtns[i].style.borderLeftStyle = "solid";
        colBtns[i].style.borderLeftWidth = "30px";          
 }
 
+//allowed commands
 let cmds = [
     "bRainbowAll", 
     "bRainbowHor", 
@@ -23,13 +25,23 @@ let cmds = [
     "bPurple", 
     "bMagenta"];
 
-addOnClick();
+//for swipe recognition
+let originalX;
+let originalY;
 
-function addOnClick(){
+//adds events for the menu animation
+addEvents();
+
+function addEvents(){
     let btns = document.getElementsByClassName("btn");
     for (let i = 0; i < btns.length; i++) {
-        btns[i].setAttribute("onclick", "buttonClicked(this);");
+        btns[i].setAttribute("onclick", "buttonClicked(this);");        
     }
+
+    //document.getElementById("menu").addEventListener('mousedown', buttonMouseDown);
+    //document.getElementById("menu").addEventListener('mouseup', buttonMouseUp);
+    document.getElementById("menu").addEventListener('touchstart', buttonTouchStart);
+    document.getElementById("menu").addEventListener('touchend', buttonTouchEnd);
 }
 
 function buttonClicked(sender) {
@@ -69,4 +81,38 @@ function buttonClicked(sender) {
     }
 
     if(~cmds.indexOf(sender.id)) cmd = sender.id;
+}
+
+function buttonMouseDown(sender){
+    originalX = sender.clientX;
+}
+
+function buttonMouseUp(sender){
+   let currentX =  sender.clientX;
+   if(originalX > currentX + 5){
+      document.getElementById("console").innerHTML = "left";
+   }else if(originalX < currentX - 5){
+      document.getElementById("console").innerHTML = "right";
+   }
+}
+
+function buttonTouchStart(sender){
+    originalX = sender.touches[0].clientX;
+    originalY = sender.touches[0].clientY;
+}
+
+function buttonTouchEnd(sender){
+    let dX = sender.changedTouches[0].clientX - originalX;
+    let dY = sender.changedTouches[0].clientY - originalY;
+    document.getElementById("console").innerHTML = "nixx";
+    if (Math.abs(dX) > Math.abs(dY)){
+        if (Math.abs(dX) > (window.innerWidth / 4)){
+            if(dX < 0){
+                document.getElementById("bAnimations").click();
+            }else{
+                document.getElementById("bColors").click();
+            }
+        }
+        
+    }
 }
