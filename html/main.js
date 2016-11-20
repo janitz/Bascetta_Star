@@ -1,3 +1,4 @@
+getById("console").innerHTML = "foo";
 
 //classes
 class Color{
@@ -22,6 +23,9 @@ class Color{
     }
 
     fadeTo(col, percent){
+        if(percent<0)percent=0;
+        if(percent>100)percent=100;
+        
         this.checkLimits();
         col.checkLimits();
         let hDiff = col.h - this.h;
@@ -186,6 +190,15 @@ let cmds = [
     "bFade2", 
     "bFade3", 
     "bFade4", 
+    "bUp2",
+    "bUp3",
+    "bUp4",
+    "bSpiral2",
+    "bSpiral3",
+    "bSpiral4",
+    "bRnd2",
+    "bRnd3",
+    "bRnd4",
     "bBlack", 
     "bWhite", 
     "bRed", 
@@ -338,11 +351,59 @@ function loop(){
                 currColNr = nextColNr;
                 nextColNr ++;
             }
-            if(nextColNr === parseInt(cmd.substr(5,1))) nextColNr=0;
-            getById("console").innerHTML = cmd.substr(5,1);
-
+            if(nextColNr >= parseInt(cmd.substr(5,1))) nextColNr=0;
+            
             setAllColors(lastColors[currColNr].fadeTo(lastColors[nextColNr],(currentRotation % 20) * 5));
             break;
+        case "bRnd2":
+        case "bRnd3":
+        case "bRnd4":
+            if(currentRotation % 1 === 0){
+                let rndMax = parseInt(cmd.substr(4,1));
+                let jagNo = Math.floor((Math.random() * 1000)) % 20;
+                let colNo = Math.floor((Math.random() * 1000)) % rndMax;
+                colors[jagNo] = lastColors[colNo];                
+            }
+            
+            break;
+        case "bUp2":
+        case "bUp3":
+        case "bUp4":
+            if(currentRotation % 20 === 0){
+                currColNr = nextColNr;
+                nextColNr ++;
+            }
+            if(nextColNr >= parseInt(cmd.substr(3,1))) nextColNr=0;
+            let c0 = lastColors[currColNr];
+            let c1 = lastColors[nextColNr];
+            let col0 = c0.fadeTo(c1,(currentRotation % 20) * 20)
+            let col1 = c0.fadeTo(c1,((currentRotation % 20)-1) * 20)
+            let col2 = c0.fadeTo(c1,((currentRotation % 20)-1.1) * 20)
+            let col3 = c0.fadeTo(c1,((currentRotation % 20)-2.1) * 20)
+
+
+            for(let i = 0; i < 5; i++){
+                colors[i] = col3;
+                colors[(i*2) + 5] = col2;
+                colors[(i*2) + 6] = col1;
+                colors[i + 15] = col0; 
+            }  
+            break;   
+            case "bSpiral2":
+            case "bSpiral3":
+            case "bSpiral4":
+            if(currentRotation % 20 === 0){
+                currColNr = nextColNr;
+                nextColNr ++;
+            }
+            if(nextColNr >= parseInt(cmd.substr(7,1))) nextColNr=0;
+            
+            let v0 = lastColors[currColNr];
+            let v1 = lastColors[nextColNr];
+            
+            colors[Math.floor(currentRotation % 20)]= v0.fadeTo(v1,currentRotation % 1);
+ 
+            break;    
         case "bBlack":
         case "bWhite":
         case "bRed":
