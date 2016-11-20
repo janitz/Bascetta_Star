@@ -3,13 +3,11 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
-        <link rel="stylesheet" href="main.css">
-        <script type="text/javascript" src="resize.js" defer></script>
-        <script type="text/javascript" src="star.js" defer></script>
-        <script type="text/javascript" src="menu.js" defer></script>
+        <link type="image/vnd.microsoft.icon" rel="icon" href="favicon.ico">
+        <link type="text/css" rel="stylesheet" href="main.css">
+        <link type="text/css" rel="stylesheet" href="range.css">
+        <script type="text/javascript" src="main.js" defer></script>
     </head>
-
     <body> 
         <div id="header">
             <canvas id="star" height="500px" width="500px"></canvas>
@@ -18,7 +16,6 @@
         <div id="menu">
             
             <button class="btn tab active" id="bColors">Colors</button><button class="btn tab" id="bAnimations">Animations</button>
-            
             <div class="page" id="pColors" style="display:block">
                 <button class="btn col" id="bBlack">Black</button>
                 <button class="btn col" id="bWhite">White</button>
@@ -29,7 +26,27 @@
                 <button class="btn col" id="bCyan">Cyan</button>
                 <button class="btn col" id="bBlue">Blue</button>
                 <button class="btn col" id="bPurple">Purple</button>
-                <button class="btn col" id="bMagenta">Magenta</button>                
+                <button class="btn col" id="bMagenta">Magenta</button>   
+                <button class="btn sub" id="bCp">Color Picker</button>
+                <div class="page panel" id="pCp">
+                    <div id="cpBgH">
+                        <input type="range" min="-180" max="180" step="0.5" value="30" oninput="cpInputRange()" class="cpRan" id="cpRH">					
+                    </div>
+                    <div id="cpBgS2">
+                        <div id="cpBgS">
+                            <input type="range" min="0" max="100" step="0.5" value="100" oninput="cpInputRange()" class="cpRan" id="cpRS">
+                        </div>
+                    </div>
+                    <div id="cpBgL2">
+                        <div id="cpBgL">
+                            <input type="range" min="0" max="100" step="0.5" value="50" oninput="cpInputRange()" class="cpRan" id="cpRL">
+                        </div>
+                    </div>
+                    <div class="cpHSL">H:</div><input type="number" min="-180" max="180" step = "0.5" oninput="cpInputNumber()" class="cpNum" id="cpNH">
+                    <div class="cpHSL">S:</div><input type="number" min="0" max="100" step = "0.5" oninput="cpInputNumber()" class="cpNum" id="cpNS">
+                    <div class="cpHSL">L:</div><input type="number" min="0" max="100" step = "0.5" oninput="cpInputNumber()" class="cpNum" id="cpNL">
+                    <button class="btn col" id="bCpSet">Set</button>
+                </div>             
             </div>
 
             <div class="page" id="pAnimations">

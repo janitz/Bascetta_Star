@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Täst</title>
+		<meta charset="utf-8">
+		<link href="range.css" type="text/css" rel="stylesheet">
+		<script type="text/javascript" src="cp.js" defer></script>
+	</head>
+	<body style="background:grey;">
+		<div>
+			<h1>Täst</h1>
+		</div>
+
+		<div id="tt" >
+			
+		</div>
+
+
+		<div id="menu" style=" background:#202020;  width: 80%; margin:0 0 0 10%; color:white;">
+			<div class="cpDiv" style="font-family:helvetica; font-size:20px; padding: 18px;">
+				Color Picker
+			</div>
+			<div id="panel" style="margin: 0 0 0 10%; width: 90%;">
+
+				<div class="cpDiv" id="cpBgMH">
+					<input type="range" min="-180" max="180" step="0.5" value="30" oninput="iRange()" id="cpRH">					
+				</div>
+				<button class="cpPM" onclick="iBtn(this)" id="cpBtnMH">-</button><input type="number" min="-180" max="180" step="0.5" oninput="iNumber()" class="cpN" id="cpNH"><button class="cpPM" onclick="iBtn(this)" id="cpBtnPH">+</button>
+				<div class="cpDiv" id="cpBgS">
+					<div id="cpBgMS">
+						<input type="range" min="0" max="100" step="0.5" value="100" oninput="iRange()" id="cpRS">
+					</div>
+				</div>
+				<button class="cpPM" onclick="iBtn(this)" id="cpBtnMS">-</button><input type="number" min="0" max="100" step ="0.5" oninput="iNumber()" class="cpN" id="cpNS"><button class="cpPM" onclick="iBtn(this)" id="cpBtnPS">+</button>
+				<div class="cpDiv" id="cpBgL">
+					<div id="cpBgML">
+						<input type="range" min="0" max="100" step="0.5" value="50" oninput="iRange()" id="cpRL">
+					</div>
+				</div>
+				<button class="cpPM" onclick="iBtn(this)" id="cpBtnML">-</button><input type="number" min="0" max="100" step = "0.5" oninput="iNumber()" class="cpN" id="cpNL"><button class="cpPM" onclick="iBtn(this)" id="cpBtnPL">+</button>
+				<div class="cpDiv" id="cpBgP" style="font-family:helvetica; font-size:20px; padding: 18px; border: solid black; border-width:0 0 0 30px;">
+					Set
+				</div>
+
+			</div>
+			
+		</div>
+	</body>
+	
+</html>
