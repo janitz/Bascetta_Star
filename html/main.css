@@ -102,3 +102,35 @@ input{
 input:focus{
   outline: none;
 }
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 59px;
+  cursor: pointer;
+  background: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  height: 59px;
+  width: 1px;
+  border: 2px solid #000;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: 0;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: transparent;
+}
+
+#footer {
+    padding: 18px;
+    background: #111;
+}
+
+a{
+    font-family: helvetica;
+	font-size: 20px;
+	color: #ddd;
+    text-decoration: none;
+}

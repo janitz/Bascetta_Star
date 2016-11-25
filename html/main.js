@@ -1,5 +1,3 @@
-getById("console").innerHTML = "foo";
-
 //classes
 class Color{
     constructor(h=0, s=100, l=50){

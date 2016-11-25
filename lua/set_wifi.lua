@@ -1,0 +1,5 @@
+file.remove("wifi.txt")
+file.open("wifi.txt","w+")
+file.writeline(ssid)
+file.writeline(pwd)
+file.close()

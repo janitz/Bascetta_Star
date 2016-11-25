@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Setup WIFI</title>
+		<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link type="image/vnd.microsoft.icon" rel="icon" href="favicon.ico">
+        <link type="text/css" rel="stylesheet" href="setup.css">
+        <script type="text/javascript" src="setup.js" defer></script>
+	</head>
+	<body>
+		<div id="title">
+			Setup WIFI
+		</div>
+		<div class="board">
+			<div class="name">Current connection</div>
+			<div class="content" id="currCon">
+				Not connected...
+			</div>
+		</div>
+		<div class="board">
+			<div class="name">Available WIFIs</div>
+			<div class="content" id="ssidTable">
+				The list of available WIFIs is being generated.<br>
+				Reload this page after 5 seconds to show the list.
+			</div>
+		</div>
+		<div class="board">
+			<div class="name">New connection</div>
+			<form class="content">
+				SSID:
+				<input id="ssid" class="border inp" type="text" name="ssid" maxlength="200">
+				Password:
+				<input class="border inp" type="text" name="pwd" maxlength="200">
+				<br><br>
+				<input class="btn border" type="submit" value="Connect">
+				<input class="btn border" type="button" value="Restart" onclick="restart()">
+			</form>
+		</div>	
+		<div>
+            <a href="main.html">Main Page</a>
+        </div>	
+	</body>
+</html>
