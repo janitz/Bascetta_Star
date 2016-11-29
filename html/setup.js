@@ -1,3 +1,6 @@
+//var currCon="This device is currently not connectet to any access point.";
+//var ssids=["wlanName"];
+
 function showCurrentConnection(){
 	if(currCon.length > 0){
 		document.getElementById("currCon").innerHTML=currCon; 

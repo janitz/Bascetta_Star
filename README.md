@@ -9,7 +9,6 @@ the project includes a lot parts:
  - html (the web page)
  - css (style of the web page)
  - javaScript (for making things move on the web page)
- - json (to send the current state of the star to the browser)
  - lua (for programming the esp8266)
  - vbs (for creating the 3d model of the star) 
  - sh (for fast starting a webserver in python)

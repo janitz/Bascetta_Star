@@ -57,10 +57,12 @@ local handle_request=function(conn,request)
 	
 	local _GET={}
 	if(vars~=nil)then
+		print(vars)
 		for k,v in vars:gmatch("(%w+)=([^&]+)&*")do
 			_GET[k]=v
 		end
 	end
+	
 	
 	if(_GET.ssid)then
 		ssid=unescape(_GET.ssid:gsub("+", " "))
@@ -70,6 +72,10 @@ local handle_request=function(conn,request)
 	if(_GET.pwd)then
 		pwd=unescape(_GET.pwd:gsub("+", " "))
 		dofile("set_wifi.lc")
+	end
+
+	if(_GET.restart=="now")then
+		node.restart()	
 	end
 	
 	path = path:lower()
@@ -83,6 +89,10 @@ local handle_request=function(conn,request)
 	elseif(path=="/main.js")then
 		setContentType(ct.js)
 		add_file('main.js')
+
+		--lastColors = [new Color(20),new Color(240),new Color(60),new Color(120)];
+		--cmd = "Color";
+
 	elseif(path=='/setup' or path=="/setup.html")then
 		
 		wifi.sta.getap(setAps)
@@ -100,7 +110,7 @@ local handle_request=function(conn,request)
 		if(ip ~=nil )then
 			add_txt('var currCon="SSID: '..ssid..'<br>IP: '..ip..'";\r\n')
 		else
-			add_txt('var currCon="This device is currently not connectet to any access point."\r\n')
+			add_txt('var currCon="This device is currently not connectet to any access point.";\r\n')
 		end
 				
 		local ssidStr = 'var ssids=['
@@ -114,8 +124,6 @@ local handle_request=function(conn,request)
 	elseif path=='/favicon.ico' then
 		setContentType(ct.ico)
 		add_file('favicon.ico')	 
-	elseif path=='/restart' then
-		node.restart()	
 	else
 		conn:send("unknown path: " .. path .. "\r\n")
 	end

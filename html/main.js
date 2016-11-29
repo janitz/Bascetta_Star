@@ -1,3 +1,4 @@
+
 //classes
 class Color{
     constructor(h=0, s=100, l=50){
@@ -180,6 +181,7 @@ let btnColors = {
     "bMagenta":new Color(300),
     "bCpSet":new Color(0,0,0)};
 let cmds = [
+    //"Color", //only internal cmd
     "bRainbowAll", 
     "bRainbowHor", 
     "bRainbowVer", 
@@ -230,8 +232,10 @@ let currentRotation = 0;
 let colors = []; //colors of the jags
 
 //animation vars
-let lastColors = [new Color(0),new Color(240),new Color(60),new Color(120)];
-let cmd = "bRainbowHor";
+let sendCmd = false;
+let red = new Color(0);
+let lastColors = [red, red, red ,red];
+let cmd = "Color";
 let currColNr = 0;
 let nextColNr = 1;
 let currJag = 1;
@@ -292,6 +296,7 @@ function loop(){
 
     switch(cmd){
         case "Color":
+            setAllColors(lastColors[0], false);
             break;
         case "bRainbowVer":
                 for(let i = 0; i < 10; i++){
@@ -413,6 +418,7 @@ function loop(){
         case "bPurple":
         case "bMagenta":
             setAllColors(btnColors[cmd], true);
+            cmd = "Color";
             break;
         case "bCpSet":
             let h,s,l;
@@ -420,10 +426,14 @@ function loop(){
             s = parseFloat(cpElements.cpRS.value);
             l = parseFloat(cpElements.cpRL.value);
             setAllColors(new Color(h,s,l), true);
-            cmd = "none";
+            cmd = "Color";
             break;
     }
     
+    if(sendCmd){
+        sendCmd = false;
+        send();
+    }
 
     fig.drawFigure(currentRotation);
 }
@@ -566,7 +576,10 @@ function buttonClicked(sender) {
         
     }
 
-    if(~cmds.indexOf(sender.id)) cmd = sender.id;
+    if(~cmds.indexOf(sender.id)) {
+        sendCmd=true;
+        cmd = sender.id;
+    }
 
 }
 function buttonTouchStart(sender){
@@ -612,3 +625,24 @@ function cpUpdateColor(){
     getById("bCpSet").style.borderLeftColor = new Color(h,s,l).toString();
     
 }
+
+function send(){
+	var request = new XMLHttpRequest();
+	var url = window.location.href;
+    var pos = url.indexOf("?");
+	if(pos > 1){
+		url = url.substring(0, pos);
+	}
+    
+    url += "?cmd=" + cmd;
+    
+    if(cmd==="Color"){
+        url += "&col=" + lastColors[0].toString();
+    }
+	
+	request.open('GET', url , true);
+	request.send(null);
+}
+
+//lastColors = [new Color(20),new Color(240),new Color(60),new Color(120)];
+//cmd = "Color";
