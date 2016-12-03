@@ -637,7 +637,9 @@ function send(){
     url += "?cmd=" + cmd;
     
     if(cmd==="Color"){
-        url += "&col=" + lastColors[0].toString();
+        url += "&hue=" + lastColors[0].h;
+        url += "&sat=" + lastColors[0].s;
+        url += "&lum=" + lastColors[0].l;
     }
 	
 	request.open('GET', url , true);

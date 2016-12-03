@@ -1,11 +1,12 @@
 # Bascetta_Star
-this project is about a white origami star for christmas.<br>
-the star is folded out of 30 white papers.<br>
-to add colors, every jag has its own ws2812 led.<br>
-the leds are controlled by an esp8266.<br>
-the UI is a webpage hosted on the esp8266.<br>
+This project is about a white origami star for christmas.<br>
+The star is folded out of 30 white papers.<br>
+If you want to fold your own star, just google "Bascetta star" for instructions.<br>
+To add colors, every jag has its own ws2812 led.<br>
+The leds are controlled by an esp8266.<br>
+The UI is a webpage hosted on the esp8266.<br>
 
-the project includes a lot parts:
+The project includes a lot parts:
  - html (the web page)
  - css (style of the web page)
  - javaScript (for making things move on the web page)

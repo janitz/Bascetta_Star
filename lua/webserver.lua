@@ -63,6 +63,23 @@ local handle_request=function(conn,request)
 		end
 	end
 	
+	if(_GET.cmd)then
+		cmd=_GET.cmd
+		if(cmd=="Color")then
+			if(_GET.hue)then
+				if(_GET.sat)then
+					if(_GET.lum)then
+						local newcol={}
+						newCol.h=_GET.hue
+						newCol.s=_GET.sat
+						newCol.l=_GET.lum
+						print(newCol.h .. "  " .. newCol.s .. "  " .. newCol.l)
+					end
+				end
+			end
+		end
+	end
+	
 	
 	if(_GET.ssid)then
 		ssid=unescape(_GET.ssid:gsub("+", " "))
@@ -86,9 +103,9 @@ local handle_request=function(conn,request)
 	elseif(path=="/main.css")then
 		setContentType(ct.css)
 		add_file('main.css')
-	elseif(path=="/main.js")then
+	elseif(path=="/main.min.js")then
 		setContentType(ct.js)
-		add_file('main.js')
+		add_file('main.min.js')
 
 		--lastColors = [new Color(20),new Color(240),new Color(60),new Color(120)];
 		--cmd = "Color";
