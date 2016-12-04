@@ -87,6 +87,9 @@ tmr.alarm(1,20,2, function()--15ms ~60Hz
     
     if(cmd=="Color")then
         ledBuffer:fill(animation.toRGB(animation.lastColor[0]))
+        if(newCol.h~=animation.lastColor[0].h or newCol.s~=animation.lastColor[0].s or newCol.l~=animation.lastColor[0].l) then
+            animation.lastColor[0]=newCol
+        end
     elseif(cmd=="bRainbowVer")then
         for i=0,9 do
             colorAngle = ((animCnt * 4) + (i * 36)) % 360

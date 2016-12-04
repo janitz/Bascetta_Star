@@ -1,21 +1,22 @@
 port=80
 
 local handle_request=function(conn,request)
-
+	
 	local ct={ 
 		html="text/html",
 		css="text/css",
 		ico="image/vnd.microsoft.icon",
 		js="application/javascript"}
 
-	local response={
-		"HTTP/1.1 200 OK\r\n",
-		"Content-Type: ctPlaceHoler\r\n",
-		"Access-Control-Allow-Origin: *\r\n",
-		"Connection: close\r\n","\r\n"}
+	local responseTxt=
+		"HTTP/1.1 200 OK\r\n"..
+		"Content-Type: ctPlaceHoler\r\n"..
+		"Server: ESP8266\r\n"..
+		"Access-Control-Allow-Origin: *\r\n"..
+		"Connection: close\r\n\r\n"
 
-	local setContentType = function(ctStr)
-		response[2]=response[2]:gsub("ctPlaceHoler",ctStr)
+	local setCt=function(ctStr)
+		responseTxt=responseTxt:gsub("ctPlaceHoler",ctStr)
 	end
 
 	local hex_to_char = function(x)
@@ -25,30 +26,38 @@ local handle_request=function(conn,request)
 	local unescape = function(url)
 		return url:gsub("%%(%x%x)", hex_to_char)
 	end
-		
-	local add_txt=function(txt)
-		response[#response+1]=txt
-	end
-	
-	local add_file=function(f)
-		file.open(f,"r")
-		local block = file.read(1024)
-		while block do
-			add_txt(block)
-			block=file.read(1024)
+
+	local sendFile=function(conn, txt1, filename, txt2)
+		local idx = 0
+		local sendTxt2=function(conn)
+			conn:send(txt2, function(conn)
+				conn:close();
+			end)
 		end
-		file.close()
+		
+		local sendChunk=function(conn)
+			file.open(filename, "r")
+			file.seek("set", idx)
+			local line = file.read(1024)
+			file.close()
+			if line then 
+				idx=idx + #line
+				conn:send(line, sendChunk) 
+			else
+				if txt2 then
+					sendTxt2()
+				else
+					conn:close()
+				end
+			end
+		end
+
+		conn:send(txt1,sendChunk)
 	end
 
-	local send_response=function(conn)
-		if #response>0 then
-			conn:send(table.remove(response,1))
-		else
-			conn:close()
-		end
+	local closeConn=function()
+		conn:close()
 	end
-	
-	--nicely done
 	
 	local _,_,method,path,vars=request:find("([A-Z]+) (.+)?(.+) HTTP")
 	if(method==nil)then
@@ -66,16 +75,10 @@ local handle_request=function(conn,request)
 	if(_GET.cmd)then
 		cmd=_GET.cmd
 		if(cmd=="Color")then
-			if(_GET.hue)then
-				if(_GET.sat)then
-					if(_GET.lum)then
-						local newcol={}
-						newCol.h=_GET.hue
-						newCol.s=_GET.sat
-						newCol.l=_GET.lum
-						print(newCol.h .. "  " .. newCol.s .. "  " .. newCol.l)
-					end
-				end
+			if(_GET.hue and _GET.sat and _GET.lum)then
+				newCol.h=tonumber(_GET.hue)
+				newCol.s=tonumber(_GET.sat)
+				newCol.l=tonumber(_GET.lum)
 			end
 		end
 	end
@@ -98,14 +101,14 @@ local handle_request=function(conn,request)
 	path = path:lower()
 	
 	if(path=='/' or path=="/main" or path=="/main.html")then
-		setContentType(ct.html)
-		add_file('main.html')
+		setCt(ct.html)
+		sendFile(conn, responseTxt, "main.html")
 	elseif(path=="/main.css")then
-		setContentType(ct.css)
-		add_file('main.css')
+		setCt(ct.css)
+		sendFile(conn, responseTxt, "main.css")
 	elseif(path=="/main.min.js")then
-		setContentType(ct.js)
-		add_file('main.min.js')
+		setCt(ct.js)
+		sendFile(conn, responseTxt, "main.min.js")
 
 		--lastColors = [new Color(20),new Color(240),new Color(60),new Color(120)];
 		--cmd = "Color";
@@ -114,20 +117,20 @@ local handle_request=function(conn,request)
 		
 		wifi.sta.getap(setAps)
 		
-		setContentType(ct.html)
-		add_file("setup.html")
+		setCt(ct.html)
+		sendFile(conn, responseTxt, "setup.html")
 		
 	elseif(path=="/setup.css")then
-		setContentType(ct.css)
-		add_file('setup.css')
+		setCt(ct.css)
+		sendFile(conn, responseTxt, "setup.css")
 	elseif(path=="/setup.js")then
-		setContentType(ct.js)
+		setCt(ct.js)
 
 		local ip = wifi.sta.getip()
 		if(ip ~=nil )then
-			add_txt('var currCon="SSID: '..ssid..'<br>IP: '..ip..'";\r\n')
+			responseTxt=responseTxt..'var currCon="SSID: '..ssid..'<br>IP: '..ip..'";\r\n'
 		else
-			add_txt('var currCon="This device is currently not connectet to any access point.";\r\n')
+			responseTxt=responseTxt..'var currCon="This device is currently not connectet to any access point.";\r\n'
 		end
 				
 		local ssidStr = 'var ssids=['
@@ -135,18 +138,18 @@ local handle_request=function(conn,request)
 				ssidStr=ssidStr..'"'..k..'",'
 		end
 		ssidStr=string.gsub(ssidStr..'];','",]','"]').."\r\n"
-		
-		add_txt(ssidStr)
-		add_file('setup.js')
+		responseTxt=responseTxt..ssidStr
+		sendFile(conn, responseTxt, "setup.js")
 	elseif path=='/favicon.ico' then
-		setContentType(ct.ico)
-		add_file('favicon.ico')	 
+		setCt(ct.ico)
+		sendFile(conn, responseTxt, "favicon.ico")	 
 	else
-		conn:send("unknown path: " .. path .. "\r\n")
+		responseTxt = "HTTP/1.0 404 Not Found\r\n\r\nPath '" .. path .. "' not found"
+		conn:send(responseTxt, closeConn)
 	end
-	
-	conn:on("sent",send_response)
-	send_response(conn)
+
+	collectgarbage()
+				
 end
 
 srv=net.createServer(net.TCP,30)
