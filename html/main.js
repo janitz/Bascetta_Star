@@ -363,8 +363,8 @@ function loop(){
         case "bRnd4":
             if(currentRotation % 1 === 0){
                 let rndMax = parseInt(cmd.substr(4,1));
-                let jagNo = Math.floor((Math.random() * 1000)) % 20;
-                let colNo = Math.floor((Math.random() * 1000)) % rndMax;
+                let jagNo = Math.floor(Math.random() * 1000) % 20;
+                let colNo = Math.floor(Math.random() * 1000) % rndMax;
                 colors[jagNo] = lastColors[colNo];                
             }
             
@@ -400,11 +400,7 @@ function loop(){
                 nextColNr ++;
             }
             if(nextColNr >= parseInt(cmd.substr(7,1))) nextColNr=0;
-            
-            let v0 = lastColors[currColNr];
-            let v1 = lastColors[nextColNr];
-            
-            colors[Math.floor(currentRotation % 20)]= v0.fadeTo(v1,currentRotation % 1);
+            colors[Math.floor(currentRotation % 20)]= lastColors[currColNr];
  
             break;    
         case "bBlack":
