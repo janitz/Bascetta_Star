@@ -45,7 +45,7 @@ local handle_request=function(conn,request)
 				conn:send(line, sendChunk) 
 			else
 				if txt2 then
-					sendTxt2()
+					sendTxt2(conn)
 				else
 					conn:close()
 				end
@@ -66,7 +66,6 @@ local handle_request=function(conn,request)
 	
 	local _GET={}
 	if(vars~=nil)then
-		print(vars)
 		for k,v in vars:gmatch("(%w+)=([^&]+)&*")do
 			_GET[k]=v
 		end
@@ -108,11 +107,7 @@ local handle_request=function(conn,request)
 		sendFile(conn, responseTxt, "main.css")
 	elseif(path=="/main.min.js")then
 		setCt(ct.js)
-		sendFile(conn, responseTxt, "main.min.js")
-
-		--lastColors = [new Color(20),new Color(240),new Color(60),new Color(120)];
-		--cmd = "Color";
-
+		sendFile(conn, responseTxt, "main.min.js", currState)
 	elseif(path=='/setup' or path=="/setup.html")then
 		
 		wifi.sta.getap(setAps)

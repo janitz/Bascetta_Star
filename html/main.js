@@ -172,7 +172,7 @@ let btnColors = {
     "bBlack":new Color(0,0,0), 
     "bWhite":new Color(0,0,100), 
     "bRed":new Color(0), 
-    "bOrange":new Color(30), 
+    "bOrange":new Color(20), 
     "bYellow":new Color(60), 
     "bGreen":new Color(120), 
     "bCyan":new Color(180), 
