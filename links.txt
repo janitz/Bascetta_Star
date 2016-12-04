@@ -1,0 +1,4 @@
+https://nodemcu-build.com
+https://nodemcu.readthedocs.io/en/master/en/
+http://www.minifier.org
+
