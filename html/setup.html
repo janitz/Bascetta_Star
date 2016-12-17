@@ -28,12 +28,13 @@
 		<div class="board">
 			<div class="name">New connection</div>
 			<form class="content">
+				You need to restart after setting the SSID and the Password to connect to the WIFI<br><br><br>
 				SSID:
 				<input id="ssid" class="border inp" type="text" name="ssid" maxlength="200">
 				Password:
-				<input class="border inp" type="text" name="pwd" maxlength="200">
+				<input id="pwd" class="border inp" type="text" name="pwd" maxlength="200">
 				<br><br>
-				<input class="btn border" type="submit" value="Connect">
+				<input class="btn border" type="button" value="Set" onclick="connect()">
 				<input class="btn border" type="button" value="Restart" onclick="restart()">
 			</form>
 		</div>	

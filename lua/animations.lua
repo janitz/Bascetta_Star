@@ -1,4 +1,6 @@
 anim={}
+anim.map={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20} --s.No 3
+--anim.map={17,18,19,20,21,2,3,4,5,6,7,8,9,10,11,15,14,13,12,16} --s.No 1 and 2
 anim.currJag=2
 anim.lastJag=1
 anim.currColNr=1
@@ -11,6 +13,7 @@ anim.lastColor[1]={h=20,s=100,l=50}
 anim.lastColor[2]={h=240,s=100,l=50}
 anim.lastColor[3]={h=120,s=100,l=50}
 anim.lastColor[4]={h=0,s=0,l=0}
+anim.concurentJags = {18,19,20,16,17,11,12,13,14,15,6,7,8,9,10,4,5,1,2,3}
 anim.neighborJags = {
     {2,5,6},
     {1,3,8},
@@ -34,8 +37,7 @@ anim.neighborJags = {
     {11,17,19},
     {13,18,20},
     {15,16,19}}
-anim.concurentJags = {18,19,20,16,17,11,12,13,14,15,6,7,8,9,10,4,5,1,2,3}
-anim.map={17,18,19,20,21,2,3,4,5,6,7,8,9,10,11,15,14,13,12,16}
+
 anim.hsl=function(h_,s_,l_)
     return {h=h_,s=s_,l=l_}
 end

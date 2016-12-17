@@ -8,8 +8,9 @@ setAps=function(t)
 	aps=t 
 end
 
-print("waiting 5s...")
-tmr.alarm(0,5000,0,function()
+print("waiting 2s...")
+print("use tmr.stop(0) to stop the init.lua")
+tmr.alarm(0,2000,0,function()
 	print("starting...")
 	dofile("AP_setup.lc")
 	dofile("animations.lc")

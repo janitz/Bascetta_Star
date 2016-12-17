@@ -24,7 +24,7 @@ function ssidClicked(sender){
 function restart(){
 	var request = new XMLHttpRequest();
 	var url = window.location.href;
-    var pos = url.indexOf("?ssid=");
+    var pos = url.indexOf("?");
 	if(pos > 1){
 		url = url.substring(0, pos);
 	}
@@ -32,6 +32,22 @@ function restart(){
 	request.open('GET', url , true);
 	request.send(null);
 }
+
+function connect(){
+	var request = new XMLHttpRequest();
+	var url = window.location.href;
+    var pos = url.indexOf("?");
+	if(pos > 1){
+		url = url.substring(0, pos);
+	}
+	url += "?ssid=" + document.getElementById("ssid").value;
+	url += "&pwd=" + document.getElementById("pwd").value;
+	
+	request.open('GET', url , true);
+	request.send(null);
+}
+
+
 
 showCurrentConnection();
 showSSIDTable();
