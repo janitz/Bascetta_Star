@@ -121,12 +121,17 @@ anim.setCurrState=function()
 end
 
 ws2812.init()
-local ledBuffer = ws2812.newBuffer(21, 3)
-local animCnt = 1000000
+ledBuffer = ws2812.newBuffer(21, 3)
+local animCnt = 0
+local speedLast = 0
 local colorAngle = 0
 ledBuffer:fill(0,0,0)
 
-tmr.alarm(1,10,2, function()--15ms ~60Hz 
+tmr.alarm(1,10,2, function()--15ms ~60Hz
+    if(animSpeed~=speedLast)then
+        speedLast=animSpeed
+        anim.setCurrState()        
+    end
     if(anim.lastCmd~=cmd)then
         anim.lastCmd=cmd
         anim.setCurrState()
@@ -135,14 +140,12 @@ tmr.alarm(1,10,2, function()--15ms ~60Hz
     if(animCnt>=360000)then animCnt=0 end
     
     if(cmd=="Color")then
+        ledBuffer:fill(anim.toRGB(anim.lastColor[1]))
         if(newCol.h~=anim.lastColor[1].h or newCol.s~=anim.lastColor[1].s or newCol.l~=anim.lastColor[1].l) then
             table.remove(anim.lastColor, 4)
             table.insert(anim.lastColor, 1, {h=newCol.h,s=newCol.s,l=newCol.l})
             anim.setCurrState()
             animCnt=0
-        end
-        if(animCnt==0)then
-            ledBuffer:fill(anim.toRGB(anim.lastColor[1]))
         end
     elseif(cmd=="bRainbowVer")then
         for i=0,9 do

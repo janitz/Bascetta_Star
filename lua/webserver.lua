@@ -6,6 +6,7 @@ local handle_request=function(conn,request)
 		html="text/html",
 		css="text/css",
 		ico="image/vnd.microsoft.icon",
+		png="image/png",
 		js="application/javascript"}
 
 	local responseTxt=
@@ -108,6 +109,9 @@ local handle_request=function(conn,request)
 	elseif(path=="/main.min.js")then
 		setCt(ct.js)
 		sendFile(conn, responseTxt, "main.min.js", currState)
+	elseif(path=="/apple-touch-icon.png")then
+		setCt(ct.png)
+		sendFile(conn, responseTxt, "apple-touch-icon.png")
 	elseif(path=='/setup' or path=="/setup.html")then
 		
 		wifi.sta.getap(setAps)
