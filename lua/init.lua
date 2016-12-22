@@ -1,8 +1,9 @@
 aps={}
 
 cmd = "Color"
+animSpeed = 200
 currState = ""
-newCol = {h=20,s=100,l=50}
+newCol = {h=20000,s=1000,l=500}
 
 setAps=function(t) 
 	aps=t 

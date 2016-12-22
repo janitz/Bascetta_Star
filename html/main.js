@@ -217,6 +217,9 @@ let cpElements = {
     "cpRH":getById("cpRH"),
     "cpRS":getById("cpRS"),
     "cpRL":getById("cpRL")};
+let speedRan = getById("speedRan");
+let speedNum = getById("speedNum");
+let lastSpeedUpdate = 0;
 let originalX;
 let originalY;
 let rangeInput;
@@ -236,6 +239,7 @@ let sendCmd = false;
 let red = new Color(0);
 let lastColors = [red, red, red ,red];
 let cmd = "Color";
+let speed = 200;
 let currColNr = 0;
 let nextColNr = 1;
 let currJag = 1;
@@ -279,8 +283,8 @@ function init(){
     for(let i = 0; i < colBtns.length; i++){
         colBtns[i].style.borderLeftColor = btnColors[colBtns[i].id].toString();
     }
-
-    cpInputRange();     
+ 
+    cpInputRange();
 
     setAllColors(new Color(0,0,20));
     
@@ -293,6 +297,9 @@ function loop(){
     requestAnimationFrame(loop);
     currentRotation += 0.125;
     if(currentRotation > 360) currentRotation -= 360;
+
+    if(lastSpeedUpdate>0)lastSpeedUpdate-=1;
+    if(lastSpeedUpdate===1)sendSpeed();
 
     switch(cmd){
         case "Color":
@@ -598,6 +605,28 @@ function buttonTouchEnd(sender){
         }
     }
 }
+function speedInRange(){
+    rangeInput = true;
+    speedNum.value = speedRan.value;
+    lastSpeedUpdate=20;
+}
+function speedInNum(){
+    speedRan.value = speedNum.value;
+    lastSpeedUpdate=20;
+}
+function sendSpeed(){
+	var request = new XMLHttpRequest();
+	var url = window.location.href;
+    var pos = url.indexOf("?");
+	if(pos > 1){
+		url = url.substring(0, pos);
+	}
+    
+    url += "?speed=" + speedRan.value;
+    
+	request.open('GET', url , true);
+	request.send(null);
+}
 function cpInputRange(){
     rangeInput = true;
     cpElements.cpNH.value = cpElements.cpRH.value;
@@ -633,14 +662,20 @@ function send(){
     url += "?cmd=" + cmd;
     
     if(cmd==="Color"){
-        url += "&hue=" + lastColors[0].h;
-        url += "&sat=" + lastColors[0].s;
-        url += "&lum=" + lastColors[0].l;
+        url += "&hue=" + (lastColors[0].h * 1000);
+        url += "&sat=" + (lastColors[0].s * 10);
+        url += "&lum=" + (lastColors[0].l * 10);
     }
 	
 	request.open('GET', url , true);
 	request.send(null);
 }
+function setSpeed(spd){
+    speed=spd;
+    speedRan.value=spd;     
+    speedNum.value=spd;
+}
 
 //lastColors = [new Color(20),new Color(240),new Color(60),new Color(120)];
 //cmd = "Color";
+//setSpeed(200);

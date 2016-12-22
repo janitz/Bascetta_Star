@@ -67,6 +67,31 @@ body{
     width: 90%;
     background:#444;    
 }
+.splitter {
+    background:#111; 
+    width:100%; 
+    height:10px;
+}
+.speed {
+    padding: 18px;
+    text-align: left;
+    font-family: helvetica;
+	font-size: 20px;
+	color: #ddd;
+    background: linear-gradient(#333,#444);
+}
+.speedBg {
+    background: #444;
+}
+#speedNum {
+    padding: 18px 0;
+    text-align: center;
+    font-family: helvetica;
+	font-size: 20px;
+	color: #ddd;
+    background: transparent;
+    
+}
 #cpBgH{
   background:linear-gradient(to right, #0ff, #00f, #f0f, #f00, #ff0, #0f0, #0ff); 
   height:59px;

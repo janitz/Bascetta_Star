@@ -49,7 +49,7 @@
                 </div>             
             </div>
 
-            <div class="page" id="pAnimations">
+            <div class="page" id="pAnimations">                
                 <button class="btn sub" id="bRainbow">Rainbow</button>
                 <div class="page panel" id="pRainbow">
                     <button class="btn" id="bRainbowHor">Horizontal</button>
@@ -85,7 +85,12 @@
                     <button class="btn" id="bSpiral3">Last 3 Colors</button>
                     <button class="btn" id="bSpiral4">Last 4 Colors</button>
                 </div>
-
+                <div class="splitter"></div>
+                <div class="speed">Speed</div>
+                <div class="speedBg">
+                    <input type="range" min="0" max="1000" step="1" value="200" oninput="speedInRange()" id="speedRan">
+                    <input type="number" min="0" max="1000" step = "1" value="200" oninput="speedInNum()" id="speedNum">
+                </div>
             </div>
             <div id="footer">
                 <a href="setup.html">Setup Page</a>

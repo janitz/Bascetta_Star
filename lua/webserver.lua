@@ -92,6 +92,10 @@ local handle_request=function(conn,request)
 	if(_GET.restart=="now")then
 		node.restart()	
 	end
+
+	if(_GET.speed)then
+		animSpeed=tonumber(_GET.speed)	
+	end
 	
 	path = path:lower()
 	

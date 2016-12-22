@@ -1,3 +1,4 @@
+
 anim={}
 anim.map={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20} --s.No 3
 --anim.map={17,18,19,20,21,2,3,4,5,6,7,8,9,10,11,15,14,13,12,16} --s.No 1 and 2
@@ -9,9 +10,9 @@ anim.lastCmd=""
 anim.colJag=nil
 anim.colBg=nil
 anim.lastColor={}
-anim.lastColor[1]={h=20,s=100,l=50}
-anim.lastColor[2]={h=240,s=100,l=50}
-anim.lastColor[3]={h=120,s=100,l=50}
+anim.lastColor[1]={h=20000,s=1000,l=500}
+anim.lastColor[2]={h=240000,s=1000,l=500}
+anim.lastColor[3]={h=120000,s=1000,l=500}
 anim.lastColor[4]={h=0,s=0,l=0}
 anim.concurentJags = {18,19,20,16,17,11,12,13,14,15,6,7,8,9,10,4,5,1,2,3}
 anim.neighborJags = {
@@ -43,62 +44,80 @@ anim.hsl=function(h_,s_,l_)
 end
 
 anim.toRGB=function(hsl)
-    local c=(1-math.abs((hsl.l/50)-1))*hsl.s/100
-    local x=c*(1-math.abs(((hsl.h/60)%2)-1))
-    local m=(hsl.l/100)-(c/2)
-    local r
-    local g
-    local b
-    if(hsl.h<=60)then
+    local r,g,b,c,x,m
+    c=(1000-math.abs((hsl.l*2)-1000))*hsl.s/1000
+    x=c*(1000-math.abs(((hsl.h/60)%2000)-1000))/1000
+    m=(hsl.l)-(c/2)
+    if(hsl.h<=60000)then
         r,g,b=c,x,0
-    elseif(hsl.h<=120)then
+    elseif(hsl.h<=120000)then
         r,g,b=x,c,0
-    elseif(hsl.h<=180)then
+    elseif(hsl.h<=180000)then
         r,g,b=0,c,x
-    elseif(hsl.h<=240)then
+    elseif(hsl.h<=240000)then
         r,g,b=0,x,c
-    elseif(hsl.h<=300)then
+    elseif(hsl.h<=300000)then
         r,g,b=x,0,c
-    elseif(hsl.h<=360)then
+    elseif(hsl.h<=360000)then
         r,g,b=c,0,x
     end
-    r=math.floor((r+m)*255)
-    g=math.floor((g+m)*255)
-    b=math.floor((b+m)*255)
-    if(r<0)then r=0 end
-    if(g<0)then g=0 end
-    if(b<0)then b=0 end
-    if(r>255)then r=255 end
-    if(g>255)then g=255 end
-    if(b>255)then b=255 end
+    r=(r+m)*255/1000
+    g=(g+m)*255/1000
+    b=(b+m)*255/1000
     return g,r,b
 end
 
-anim.fadeTo=function(c1,c2,percent)
-    if(percent<0)then percent=0 end
-    if(percent>100)then percent=100 end
+anim.fadeTo=function(c1,c2,promill)
+    local hDiff,sDiff,lDiff,h_,s_,l_,hsl
+    if(promill<0)then promill=0 end
+    if(promill>1000)then promill=1000 end
     
-    local hDiff = c2.h-c1.h
-    if(hDiff > 180)then hDiff=hDiff-360 end
-    if(hDiff <- 180)then hDiff=hDiff+ 360 end
+    hDiff = c2.h-c1.h
+    if(hDiff > 180000)then hDiff=hDiff-360000 end
+    if(hDiff <- 180000)then hDiff=hDiff+360000 end
 
-    local sDiff=c2.s-c1.s;
-    local lDiff=c2.l-c1.l;
+    sDiff=c2.s-c1.s;
+    lDiff=c2.l-c1.l;
 
-    local h_ = (c1.h + 3600 + (hDiff * percent / 100)) % 360;
-    local s_ = c1.s + (sDiff * percent / 100);
-    local l_ = c1.l + (lDiff * percent / 100);
-    local hsl={h=h_,s=s_,l=l_}
+    h_ = (c1.h + 3600000 + (hDiff * promill / 1000)) % 360000;
+    s_ = c1.s + (sDiff * promill / 1000);
+    l_ = c1.l + (lDiff * promill / 1000);
+    hsl={h=h_,s=s_,l=l_}
     return anim.toRGB(hsl)
 end
 
-anim.setCurrState=function()
-    currState = "lastColors = ["
-    for i=1,4 do	
-        currState=currState.."new Color("..anim.lastColor[i].h..','..anim.lastColor[i].s..','..anim.lastColor[i].l..'),'
+anim.toDec=function(number)
+    local str,tmp,s
+    str=""
+    if(number<0)then
+        str="-"
+        number=-number
     end
-    currState=string.gsub(currState..'];',',];','];').."\r\n"
-    currState=currState..'cmd="'..cmd..'";\r\n'
+    str=str..number/1000
+    tmp=number%1000
+    if(tmp>0)then
+        s=""
+        for i=1,3 do
+            s=""..tmp%10 ..s
+            tmp=tmp/10
+        end
+        str=str.."."..s
+    end
+    return str
+end
+
+anim.setCurrState=function()
+    local str = "lastColors = ["
+    for i=1,4 do	
+        str=str.."new Color("..anim.toDec(anim.lastColor[i].h)..','
+        str=str..anim.toDec(anim.lastColor[i].s*100)..','
+        str=str..anim.toDec(anim.lastColor[i].l*100)..'),'
+    end
+    str=string.gsub(str..'];',',];','];').."\r\n"
+    str=str..'cmd="'..cmd..'";\r\n'
+    str=str..'setSpeed('..animSpeed..');\r\n'
+    
+    currState=str
 end
 
 ws2812.init()
@@ -112,8 +131,8 @@ tmr.alarm(1,10,2, function()--15ms ~60Hz
         anim.lastCmd=cmd
         anim.setCurrState()
     end
-    animCnt = (math.floor(animCnt*5)+1)/5
-    if(animCnt>=360)then animCnt=0 end
+    animCnt = animCnt + animSpeed
+    if(animCnt>=360000)then animCnt=0 end
     
     if(cmd=="Color")then
         ledBuffer:fill(anim.toRGB(anim.lastColor[1]))
@@ -124,25 +143,31 @@ tmr.alarm(1,10,2, function()--15ms ~60Hz
         end
     elseif(cmd=="bRainbowVer")then
         for i=0,9 do
-            colorAngle = ((animCnt * 8) + (i * 36)) % 360
-            if(i%2==0)then ledBuffer:set(anim.map[(i/2)+1],anim.toRGB(anim.hsl(colorAngle,100,50)))end
-            ledBuffer:set(anim.map[i+6],anim.toRGB(anim.hsl(colorAngle,100,50)))
-            if(i%2==1)then ledBuffer:set(anim.map[((i - 1)/2) + 16],anim.toRGB(anim.hsl(colorAngle,100,50)))end
+            colorAngle = ((animCnt * 10) + (i * 36000)) % 360000
+            ledBuffer:set(anim.map[i+6],anim.toRGB(anim.hsl(colorAngle,1000,500)))
+            if(i%2==0)then ledBuffer:set(anim.map[(i/2)+1],ledBuffer:get(anim.map[i+6]))end
+            if(i%2==1)then ledBuffer:set(anim.map[((i - 1)/2) + 16],ledBuffer:get(anim.map[i+6]))end
         end
     elseif(cmd=="bRainbowHor")then
+        local c0g,c0r,c0b,c1g,c1r,c1b,c2g,c2r,c2b,c3g,c3r,c3b
+        c0g,c0r,c0b = anim.toRGB(anim.hsl((colorAngle % 360000),1000,500))
+        c1g,c1r,c1b = anim.toRGB(anim.hsl(((colorAngle + 25000) % 360000),1000,500))
+        c2g,c2r,c2b = anim.toRGB(anim.hsl(((colorAngle + 40000) % 360000),1000,500))
+        c3g,c3r,c3b = anim.toRGB(anim.hsl(((colorAngle + 65000) % 360000),1000,500))
         for i=0,4 do
-            colorAngle = animCnt * 8
-            ledBuffer:set(anim.map[i+1],anim.toRGB(anim.hsl((colorAngle % 360),100,50)))
-            ledBuffer:set(anim.map[(i*2) + 6],anim.toRGB(anim.hsl(((colorAngle + 25) % 360),100,50)))
-            ledBuffer:set(anim.map[(i*2) + 7],anim.toRGB(anim.hsl(((colorAngle + 40) % 360),100,50)))
-            ledBuffer:set(anim.map[i + 16],anim.toRGB(anim.hsl(((colorAngle + 65) % 360),100,50))) 
+            colorAngle = animCnt * 10
+            ledBuffer:set(anim.map[i+1],c0g,c0r,c0b)
+            ledBuffer:set(anim.map[(i*2) + 6],c1g,c1r,c1b)
+            ledBuffer:set(anim.map[(i*2) + 7],c2g,c2r,c2b)
+            ledBuffer:set(anim.map[i + 16],c3g,c3r,c3b) 
         end
     elseif(cmd=="bRainbowAll")then
-        ledBuffer:fill(anim.toRGB(anim.hsl(animCnt*2%360,100,50)))
+        ledBuffer:fill(anim.toRGB(anim.hsl(animCnt*4%360000,1000,500)))
     elseif(cmd=="bWalk1" or cmd=="bWalk2")then
-        if((animCnt%4)+0.01<0.02)then
+        if(animCnt>=4000)then
+            animCnt=0
             ledBuffer:fill(anim.toRGB(anim.lastColor[2]))
-            local cnt = (math.floor((math.random()*1000))%2)
+            local cnt = math.random(0,1)
             for i=1,3 do
                 if(anim.neighborJags[anim.currJag][i] ~= anim.lastJag)then
                     if(cnt==0)then
@@ -157,46 +182,47 @@ tmr.alarm(1,10,2, function()--15ms ~60Hz
         end
         anim.colJag = anim.lastColor[1];
         anim.colBg = anim.lastColor[2];
-        ledBuffer:set(anim.map[anim.currJag],anim.fadeTo(anim.colJag,anim.colBg,(animCnt % 4) * 10))
-        ledBuffer:set(anim.map[anim.lastJag],anim.fadeTo(anim.colJag,anim.colBg,((animCnt % 4) * 15) + 40))
+        ledBuffer:set(anim.map[anim.currJag],anim.fadeTo(anim.colJag,anim.colBg,animCnt/10))
+        ledBuffer:set(anim.map[anim.lastJag],anim.fadeTo(anim.colJag,anim.colBg,(animCnt*3/20) + 400))
         if(cmd=="bWalk2")then
             ledBuffer:set(anim.map[anim.concurentJags[anim.currJag]], ledBuffer:get(anim.map[anim.currJag]))
             ledBuffer:set(anim.map[anim.concurentJags[anim.lastJag]], ledBuffer:get(anim.map[anim.lastJag]))
         end
     elseif(cmd=="bFade2"or cmd=="bFade3"or cmd=="bFade4")then
-        if((animCnt%20)+0.01<0.02)then
+        if(animCnt>=20000)then
+            animCnt=0
             anim.currColNr = anim.nextColNr
             anim.nextColNr = anim.nextColNr + 1
         end
         local num=cmd:gsub("bFade","")
         if(anim.nextColNr > tonumber(num))then anim.nextColNr=1 end
-        ledBuffer:fill(anim.fadeTo(anim.lastColor[anim.currColNr], anim.lastColor[anim.nextColNr],animCnt*5%100))
+        ledBuffer:fill(anim.fadeTo(anim.lastColor[anim.currColNr], anim.lastColor[anim.nextColNr],animCnt/10))
     elseif(cmd=="bRnd2"or cmd=="bRnd3"or cmd=="bRnd4")then
-        if((animCnt%2)+0.01<0.02)then
-            local num=cmd:gsub("bRnd","") 
-            local rndMax = tonumber(num)
-            local jagNo = math.floor(math.random()*1000)%20;
-            local colNo = math.floor(math.random()*1000)%rndMax;
-            ledBuffer:set(anim.map[jagNo+1],anim.toRGB(anim.lastColor[colNo+1]))
+        if(animCnt>=2000)then
+            animCnt=0
+            local num,rndMax,jagNo,colNo
+            num=cmd:gsub("bRnd","") 
+            rndMax = tonumber(num)
+            jagNo = math.random(20)
+            colNo = math.random(rndMax)
+            ledBuffer:set(anim.map[jagNo],anim.toRGB(anim.lastColor[colNo]))
         end
     elseif(cmd=="bUp2"or cmd=="bUp3"or cmd=="bUp4")then
-        if((animCnt%20)+0.01<0.02)then
+        if(animCnt>=20000)then
+            animCnt=0
             anim.currColNr = anim.nextColNr
             anim.nextColNr = anim.nextColNr + 1
         end
-        local num=cmd:gsub("bUp","")
+        local num,c0,c1,c0g,c0r,c0b,c1g,c1r,c1b,c2g,c2r,c2b,c3g,c3r,c3b 
+        num=cmd:gsub("bUp","")
         if(anim.nextColNr > tonumber(num))then anim.nextColNr=1 end
-        local c0 = anim.lastColor[anim.currColNr];
-        local c1 = anim.lastColor[anim.nextColNr];
-        local c0g,c0r,c0b 
-        local c1g,c1r,c1b 
-        local c2g,c2r,c2b 
-        local c3g,c3r,c3b 
+        c0 = anim.lastColor[anim.currColNr];
+        c1 = anim.lastColor[anim.nextColNr];
         
-        c0g,c0r,c0b = anim.fadeTo(c0,c1,(animCnt % 20) * 20)
-        c1g,c1r,c1b = anim.fadeTo(c0,c1,((animCnt % 20)-1) * 20)
-        c2g,c2r,c2b = anim.fadeTo(c0,c1,((animCnt % 20)-1.1) * 20)
-        c3g,c3r,c3b = anim.fadeTo(c0,c1,((animCnt % 20)-2.1) * 20)
+        c0g,c0r,c0b = anim.fadeTo(c0,c1,(animCnt)/10)
+        c1g,c1r,c1b = anim.fadeTo(c0,c1,(animCnt-1000)/10)
+        c2g,c2r,c2b = anim.fadeTo(c0,c1,(animCnt-1100)/10)
+        c3g,c3r,c3b = anim.fadeTo(c0,c1,(animCnt-2100)/10)
 
 
         for i=1,5 do
@@ -206,13 +232,14 @@ tmr.alarm(1,10,2, function()--15ms ~60Hz
             ledBuffer:set(anim.map[i+15],c0g,c0r,c0b) 
         end
     elseif(cmd=="bSpiral2"or cmd=="bSpiral3"or cmd=="bSpiral4") then
-        if((animCnt/2%20)+0.01<0.02)then
+        if(animCnt>=40000)then
+            animCnt=0
             anim.currColNr = anim.nextColNr
             anim.nextColNr = anim.nextColNr + 1
         end
         local num=cmd:gsub("bSpiral","")
         if(anim.nextColNr > tonumber(num))then anim.nextColNr=1 end
-        ledBuffer:set(anim.map[(math.floor(animCnt/2%20))+1],anim.toRGB(anim.lastColor[anim.currColNr]))
+        ledBuffer:set(anim.map[(animCnt/2000)+1],anim.toRGB(anim.lastColor[anim.currColNr]))
         
 
     end
@@ -220,3 +247,4 @@ tmr.alarm(1,10,2, function()--15ms ~60Hz
     ws2812.write(ledBuffer)
     tmr.start(1) 
 end)
+
