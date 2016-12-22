@@ -29,4 +29,8 @@ The project includes a lot parts:
 <img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/webpage_4.png" width="250">
 <img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/webpage_5.png" width="250">
 
-
+# Files on esp8266 module
+Take a look at the picture to get an idea which files are on the esp8266 module.<br>
+Notice the file extension!!!<br>
+Most .lua files has been compiled to .lc!!!
+<img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/files_on_esp8266.png" width="1600px">
