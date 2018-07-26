@@ -160,6 +160,8 @@ class Figure {
 
 }
 
+let serverIsEsp = false;
+
 //html elements
 let star = getById("star");
 let menu = getById("menu");
@@ -240,6 +242,7 @@ let red = new Color(0);
 let lastColors = [red, red, red ,red];
 let cmd = "Color";
 let speed = 200;
+let animCnt = 0;
 let currColNr = 0;
 let nextColNr = 1;
 let currJag = 1;
@@ -277,7 +280,7 @@ loop();
 
 function init(){
     addEvents();
-        
+
     //colored square on the left side of the color buttons
     let colBtns = document.getElementsByClassName("col");
     for(let i = 0; i < colBtns.length; i++){
@@ -294,9 +297,14 @@ function init(){
 
 }
 function loop(){
+   
+
     requestAnimationFrame(loop);
     currentRotation += 0.125;
     if(currentRotation > 360) currentRotation -= 360;
+    animCnt = animCnt + speed;
+    if(animCnt > 360000) animCnt = animCnt - 360000;
+    getById("bRnd").innerHTML = animCnt;
 
     if(lastSpeedUpdate>0)lastSpeedUpdate-=1;
     if(lastSpeedUpdate===1)sendSpeed();
@@ -307,7 +315,7 @@ function loop(){
             break;
         case "bRainbowVer":
                 for(let i = 0; i < 10; i++){
-                    let colorAngle = (currentRotation * 4) + (i * 36);
+                    let colorAngle = (animCnt / 250) + (i * 36);
                     colorAngle %= 360;
                     if (i%2 === 0) colors[i/2] = new Color(colorAngle,80,65);
                     colors[i + 5] = new Color(colorAngle,90,60);
@@ -316,7 +324,7 @@ function loop(){
             break;
         case "bRainbowHor":
                 for(let i = 0; i < 5; i++){
-                    let colorAngle = currentRotation * 4;
+                    let colorAngle = (animCnt / 250);
                     colors[i] = new Color((colorAngle % 360),80,55);
                     colors[(i*2) + 5] = new Color(((colorAngle + 30) % 360),80,55);
                     colors[(i*2) + 6] = new Color(((colorAngle + 42) % 360),80,55);
@@ -324,12 +332,13 @@ function loop(){
                 }
             break;
         case "bRainbowAll":
-                let colorAngle = currentRotation * 4;
+                let colorAngle = (animCnt / 250);
                 setAllColors(new Color((colorAngle % 360),90,50), false);
             break;
         case "bWalk1":
         case "bWalk2":
-            if(currentRotation % 4 === 0){
+            if(animCnt > 4000){
+                animCnt = 0;
                 setAllColors(lastColors[1]);
                 let cnt = Math.floor((Math.random() * 1000)) % 2;
                 for(let i = 0; i<3;i++){
@@ -347,8 +356,8 @@ function loop(){
             }
             colJag = lastColors[0];
             colBg = lastColors[1];
-            colors[currJag] = colJag.fadeTo(colBg, (currentRotation % 4) * 10);
-            colors[lastJag] = colJag.fadeTo(colBg, ((currentRotation % 4) * 15) + 40 );
+            colors[currJag] = colJag.fadeTo(colBg, animCnt / 100);
+            colors[lastJag] = colJag.fadeTo(colBg, (animCnt / 1000 * 15) + 40);
             if (cmd === "bWalk2"){
                 colors[concurentJags[currJag]] = colors[currJag];
                 colors[concurentJags[lastJag]] = colors[lastJag];
@@ -357,18 +366,20 @@ function loop(){
         case "bFade2":
         case "bFade3":
         case "bFade4":
-            if(currentRotation % 20 === 0){
+            if(animCnt > 20000){
+                animCnt = 0;
                 currColNr = nextColNr;
                 nextColNr ++;
             }
             if(nextColNr >= parseInt(cmd.substr(5,1))) nextColNr=0;
             
-            setAllColors(lastColors[currColNr].fadeTo(lastColors[nextColNr],(currentRotation % 20) * 5));
+            setAllColors(lastColors[currColNr].fadeTo(lastColors[nextColNr],animCnt / 100));
             break;
         case "bRnd2":
         case "bRnd3":
         case "bRnd4":
-            if(currentRotation % 1 === 0){
+            if(animCnt > 2000){
+                animCnt = 0;
                 let rndMax = parseInt(cmd.substr(4,1));
                 let jagNo = Math.floor(Math.random() * 1000) % 20;
                 let colNo = Math.floor(Math.random() * 1000) % rndMax;
@@ -379,17 +390,18 @@ function loop(){
         case "bUp2":
         case "bUp3":
         case "bUp4":
-            if(currentRotation % 20 === 0){
+            if(animCnt > 20000){
+                animCnt = 0;
                 currColNr = nextColNr;
                 nextColNr ++;
             }
             if(nextColNr >= parseInt(cmd.substr(3,1))) nextColNr=0;
             let c0 = lastColors[currColNr];
             let c1 = lastColors[nextColNr];
-            let col0 = c0.fadeTo(c1,(currentRotation % 20) * 20)
-            let col1 = c0.fadeTo(c1,((currentRotation % 20)-1) * 20)
-            let col2 = c0.fadeTo(c1,((currentRotation % 20)-1.1) * 20)
-            let col3 = c0.fadeTo(c1,((currentRotation % 20)-2.1) * 20)
+            let col0 = c0.fadeTo(c1,(animCnt/100))
+            let col1 = c0.fadeTo(c1,((animCnt - 1000) / 100))
+            let col2 = c0.fadeTo(c1,((animCnt - 1100) / 100))
+            let col3 = c0.fadeTo(c1,((animCnt - 2100) / 100))
 
 
             for(let i = 0; i < 5; i++){
@@ -402,12 +414,13 @@ function loop(){
             case "bSpiral2":
             case "bSpiral3":
             case "bSpiral4":
-            if(currentRotation % 20 === 0){
+            if(animCnt > 40000){
+                animCnt = 0;
                 currColNr = nextColNr;
                 nextColNr ++;
             }
             if(nextColNr >= parseInt(cmd.substr(7,1))) nextColNr=0;
-            colors[Math.floor(currentRotation % 20)]= lastColors[currColNr];
+            colors[Math.floor(animCnt/2000)]= lastColors[currColNr];
  
             break;    
         case "bBlack":
@@ -607,7 +620,7 @@ function buttonTouchEnd(sender){
 }
 function speedInRange(){
     rangeInput = true;
-    speedNum.value = speedRan.value;
+    speedNum.value = speedRan.value;    
     lastSpeedUpdate=20;
 }
 function speedInNum(){
@@ -615,6 +628,8 @@ function speedInNum(){
     lastSpeedUpdate=20;
 }
 function sendSpeed(){
+    speed = parseInt(speedRan.value);
+    if (!serverIsEsp) return;
 	var request = new XMLHttpRequest();
 	var url = window.location.href;
     var pos = url.indexOf("?");
@@ -652,6 +667,7 @@ function cpUpdateColor(){
 }
 
 function send(){
+    if (!serverIsEsp) return;
 	var request = new XMLHttpRequest();
 	var url = window.location.href;
     var pos = url.indexOf("?");
@@ -671,6 +687,7 @@ function send(){
 	request.send(null);
 }
 function setSpeed(spd){
+    serverIsEsp = true; //only esp starts this function
     speed=spd;
     speedRan.value=spd;     
     speedNum.value=spd;
