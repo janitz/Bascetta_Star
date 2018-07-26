@@ -304,8 +304,7 @@ function loop(){
     if(currentRotation > 360) currentRotation -= 360;
     animCnt = animCnt + speed;
     if(animCnt > 360000) animCnt = animCnt - 360000;
-    getById("bRnd").innerHTML = animCnt;
-
+   
     if(lastSpeedUpdate>0)lastSpeedUpdate-=1;
     if(lastSpeedUpdate===1)sendSpeed();
 
