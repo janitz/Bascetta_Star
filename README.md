@@ -6,6 +6,9 @@ To add colors, every jag has its own ws2812 led.<br>
 The leds are controlled by an esp8266.<br>
 The UI is a webpage hosted on the esp8266.<br>
 
+Preview:
+https://janitz.github.io/Bascetta_Star/html/main.html
+
 The project includes a lot parts:
  - html (the web page)
  - css (style of the web page)
