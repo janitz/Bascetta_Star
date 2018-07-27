@@ -239,7 +239,7 @@ let colors = []; //colors of the jags
 //animation vars
 let sendCmd = false;
 let red = new Color(0);
-let lastColors = [red, red, red ,red];
+let lastColors = [new Color(20), new Color(240), new Color(120) ,new Color(0, 0, 0)];
 let cmd = "Color";
 let speed = 200;
 let animCnt = 0;
