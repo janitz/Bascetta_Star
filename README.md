@@ -9,10 +9,10 @@ The UI is a webpage hosted on the esp8266.<br>
 Preview:
 https://janitz.github.io/Bascetta_Star/html/main.html
 
-The project includes a lot parts:
+The project includes following parts:
  - html (the web page)
  - css (style of the web page)
- - javaScript (for making things move on the web page)
+ - javaScript (for making things move on the web page) (minified by https://www.minifier.org)
  - lua (for programming the esp8266)
  - vbs (for creating the 3d model of the star) 
  - sh (for fast starting a webserver in python)
