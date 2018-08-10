@@ -66,12 +66,25 @@ class Point {
         let cos = Math.cos(rad);
         let sin = Math.sin(rad);
 
-        let xOffset = (star.width / 2)
-        let x = this.x - xOffset;
+        let Offset = (star.width / 2);
+        let x = this.x - Offset;
 
-        this.xRot = xOffset + (cos * x) - (sin * this.z);
+        this.xRot = Offset + (cos * x) - (sin * this.z);
         this.yRot = this.y;
-        this.zRot = xOffset + (sin * x) + (cos * this.z);
+        this.zRot = Offset + (sin * x) + (cos * this.z);
+    }
+
+    rotateX(angle){
+        let rad = angle * Math.PI / 180;
+        let cos = Math.cos(rad);
+        let sin = Math.sin(rad);
+
+        let Offset = 255; //255 = ~star-figure-height / 2
+        let y = this.yRot - Offset;
+        let z = this.zRot - Offset; 
+
+        this.yRot = (cos * y) - (sin * z) + Offset;
+        this.zRot = (sin * y) + (cos * z) + Offset;
     }
 
      convert2d(){
@@ -108,7 +121,10 @@ class Path {
     }
 
     drawPath(ctx) {
-        ctx.fillStyle = colors[this.number].toString();
+        let fillCol = colors[this.number];
+        let strokeCol = fillCol.l <30?"#eee":"#111";
+        ctx.fillStyle = fillCol.toString();
+        ctx.strokeStyle = strokeCol;
         ctx.beginPath();
         let point = this.points[this.points.length - 1];
         ctx.moveTo(point.x2d, point.y2d);
@@ -143,6 +159,7 @@ class Figure {
         this.paths.forEach( (path) => {
             path.points.forEach( (point) => {
                 point.rotateY(angle);
+                point.rotateX(tilt);
                 point.convert2d();
             });
         });
@@ -232,6 +249,7 @@ let perspective = {
     x:star.width/2, 
     y:0, 
     z:-1000};
+let tilt = 10;
 let fig = generateStar();
 let currentRotation = 0;
 let colors = []; //colors of the jags
@@ -292,14 +310,13 @@ function init(){
     
     ctx.lineWidth = 1;
     ctx.lineCap = "round";
-    ctx.strokeStyle = "rgb(0,0,0)";
 
 }
 function loop(){
    
 
     requestAnimationFrame(loop);
-    currentRotation += 0.125;
+    currentRotation += 0.25;
     if(currentRotation > 360) currentRotation -= 360;
     animCnt = animCnt + speed;
     if(animCnt > 360000) animCnt = animCnt - 360000;
@@ -531,6 +548,17 @@ function resize(e) {
         lastStarSize = size;
     }
 }
+function scrolled(e){
+    var h = document.documentElement, 
+        b = document.body,
+        st = 'scrollTop',
+        sh = 'scrollHeight';
+
+    var percent = (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100;
+
+    tilt = (50 - percent) * 0.2;
+
+}
 function setAllColors(col, addToLast=false){
     if (addToLast && (col.toString() !== lastColors[0].toString())){
         for (let i = lastColors.length-1; i >= 0; i--) lastColors[i+1] = lastColors[i];
@@ -541,6 +569,7 @@ function setAllColors(col, addToLast=false){
 function addEvents(){
     window.addEventListener('load', resize);
     window.addEventListener('resize', resize);
+    window.addEventListener('scroll', scrolled);
 
     let btns = document.getElementsByClassName("btn");
     for (let i = 0; i < btns.length; i++) {
