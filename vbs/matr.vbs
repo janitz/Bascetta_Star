@@ -24,8 +24,12 @@ vectorIn3(3) = 1
 
 
 main
+
 sub main()
-    stri = ""
+    dim lines(59)
+    dim order : order = array(0,1,2,16,36,41,29,14,52,4,19,56,37,39,17,38,40,15,28,13,51,55,3,18,33,26,48,21,44,59,7,11,45,49,24,34,42,22,57,53,12,27,20,54,5,23,43,58,10,6,47,30,31,32,46,8,9,25,50,35)
+
+    cnt = 0
 
     initMatrixVals
 
@@ -62,30 +66,32 @@ sub main()
                 rotateY 120 * zz
                 
                 rotateX -37.38
-                
-                scaleX 1.3
-                scaleY 1.3
-                scaleZ 1.3
-                
-                translateX 250
-                translateY 275
 
-                stri = stri & "fig.addPath(new Path(["                
+                str = "f.addPath(["
                 multiplyVector vectorIn1
-                stri = stri & VectorOut2String & ","
+                str = str & VectorOut2String & ","
                 multiplyVector vectorIn2
-                stri = stri & VectorOut2String & ","
+                str = str & VectorOut2String & ","
                 multiplyVector vectorIn3
-                stri = stri & VectorOut2String
-                stri = stri & "],""rgba(0,0,255,1)"", 1));" & vbCrlf
+                str = str & VectorOut2String
+                str = str & "], " & "PLACEHOLDER" & ");" & vbCrlf
+                
+                lines(cnt) = str
+                cnt = cnt + 1
                 
                 initMatrixVals
             next
         next
     next
-  
     
-    createFile stri
+    str = ""
+    for cc = 0 to 59
+        line = lines(order(cc))
+        line = replace(line, "PLACEHOLDER", int(cc / 3))
+        str = str & line
+    next
+    
+    createFile str
 end sub
 
 
@@ -127,7 +133,7 @@ sub multiply()
 
     for i = 0 to 3                                'rows of matrixOut
         for k = 0 to 3                            'columns of matrixOut
-            for j = 0 to 3                        'rows of matrixIn1/ columns of matrixIn2
+            for j = 0 to 3                        'rows of matrixIn1 / columns of matrixIn2
                 matrixOut(i, k) = matrixOut(i, k) + (matrixIn1(i, j) * matrixIn2(j, k))   
             next
         next
