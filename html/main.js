@@ -248,7 +248,7 @@ let perspective = {
     x:star.width/2, 
     y:0, 
     z:-1000};
-let tilt = 10;
+let tilt = 25;
 let fig = generateStar();
 let currentRotation = 0;
 let colors = []; //colors of the jags
