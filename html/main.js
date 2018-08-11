@@ -41,7 +41,10 @@ class Color{
         return new Color(h,s,l);
     }
 
-    toString(){
+    toString(forStar=false){
+        if (forStar){
+            return "hsl("+this.h+","+this.s+"%,"+(10+(this.l*0.9))+"%)";
+        }
         return "hsl("+this.h+","+this.s+"%,"+this.l+"%)";
     }
 }
@@ -121,10 +124,7 @@ class Path {
     }
 
     drawPath(ctx) {
-        let fillCol = colors[this.number];
-        let strokeCol = fillCol.l <30?"#eee":"#111";
-        ctx.fillStyle = fillCol.toString();
-        ctx.strokeStyle = strokeCol;
+        ctx.fillStyle = colors[this.number].toString(true);
         ctx.beginPath();
         let point = this.points[this.points.length - 1];
         ctx.moveTo(point.x2d, point.y2d);
@@ -309,6 +309,7 @@ function init(){
     
     ctx.lineWidth = 1;
     ctx.lineCap = "round";
+    ctx.strokeStyle = "#000"
 
 }
 function loop(){
