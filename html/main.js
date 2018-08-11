@@ -43,7 +43,54 @@ class Color{
 
     toString(forStar=false){
         if (forStar){
-            return "hsl("+this.h+","+this.s+"%,"+(10+(this.l*0.9))+"%)";
+            let r,g,b,c,h,x,m;
+            c = (1 - Math.abs((this.l / 50) - 1)) * this.s / 100
+            h = this.h / 60;
+            x = c * (1 - Math.abs((h % 2) - 1))
+            m = (this.l / 100) - (c / 2)
+            
+            switch (Math.floor(h)) {
+                case 0:
+                    r=c;
+                    g=x;
+                    b=0;
+                    break;
+                case 1:
+                    r=x;
+                    g=c;
+                    b=0;
+                    break;
+                case 2:
+                    r=0;
+                    g=c;
+                    b=x;
+                    break;
+                case 3:
+                    r=0;
+                    g=x;
+                    b=c;
+                    break;
+                case 4:
+                    r=x;
+                    g=0;
+                    b=c;
+                    break;
+                default: //5
+                    r=c;
+                    g=0;
+                    b=x;
+                    break;
+                }
+            r=(r+m)*255
+            g=(g+m)*255
+            b=(b+m)*255
+            
+            let o = 0.9; //opacity for paper color of the star
+            r=255+(r-255)*o
+            g=255+(g-255)*o
+            b=255+(b-255)*o
+            
+            return "rgb("+r+","+g+","+b+")";
         }
         return "hsl("+this.h+","+this.s+"%,"+this.l+"%)";
     }
@@ -332,23 +379,23 @@ function loop(){
                 for(let i = 0; i < 10; i++){
                     let colorAngle = (animCnt / 250) + (i * 36);
                     colorAngle %= 360;
-                    if (i%2 === 0) colors[i/2] = new Color(colorAngle,80,65);
-                    colors[i + 5] = new Color(colorAngle,90,60);
-                    if (i%2 === 1) colors[((i - 1)/2) + 15] = new Color(colorAngle,80,55);
+                    if (i%2 === 0) colors[i/2] = new Color(colorAngle,90,60);
+                    colors[i + 5] = new Color(colorAngle,95,55);
+                    if (i%2 === 1) colors[((i - 1)/2) + 15] = new Color(colorAngle,90,50);
                 }
             break;
         case "bRainbowHor":
                 for(let i = 0; i < 5; i++){
                     let colorAngle = (animCnt / 250);
                     colors[i] = new Color((colorAngle % 360),80,55);
-                    colors[(i*2) + 5] = new Color(((colorAngle + 30) % 360),80,55);
-                    colors[(i*2) + 6] = new Color(((colorAngle + 42) % 360),80,55);
-                    colors[i + 15] = new Color(((colorAngle + 72) % 360),80,55); 
+                    colors[(i*2) + 5] = new Color(((colorAngle + 30) % 360),90,55);
+                    colors[(i*2) + 6] = new Color(((colorAngle + 42) % 360),90,55);
+                    colors[i + 15] = new Color(((colorAngle + 72) % 360),90,55); 
                 }
             break;
         case "bRainbowAll":
                 let colorAngle = (animCnt / 250);
-                setAllColors(new Color((colorAngle % 360),90,50), false);
+                setAllColors(new Color((colorAngle % 360),95,50), false);
             break;
         case "bWalk1":
         case "bWalk2":
