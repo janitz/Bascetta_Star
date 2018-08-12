@@ -229,9 +229,6 @@ let serverIsEsp = false;
 let star = getById("star");
 let menu = getById("menu");
 
-// resize vars
-let lastStarSize = 0; //to avoid resize on mobile browser scroll 
-
 //menu elements
 let btnColors = {
     "bBlack":new Color(0,0,0), 
@@ -584,23 +581,26 @@ function generateStar(){
 function resize(e) {
     let width = window.innerWidth;
     let height = window.innerHeight;
-    let size = width * 0.8 ;
+    let size = width * 0.9 ;
+    if (size > height * 0.9) size = height * 0.9;
     if (size > 500) size = 500;
-    if (size > height / 3) size = height / 3;
     if (size < 10) size = 10;
-    if (Math.abs((lastStarSize - size) / size) > 0.25){
-        star.style.width = size + 'px';
-        star.style.height = size + 'px';
-        menu.style.top = size + 'px';
-        lastStarSize = size;
-    }
+    star.style.width = size + 'px';
+    star.style.height = size + 'px';
+    menu.style.height = (height - 110) + 'px';
+    getById("fakeScroll").style.height = height + 'px';
+    
 }
 function scrolled(e){
-    let h = document.documentElement;
-    let b = document.body;
-    let st = 'scrollTop';
-    let sh = 'scrollHeight';
-    let percent = (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100;
+    let elem = getById("scrollable");
+    if(!menu.classList.contains("active")){
+        elem = getById("fakeScroll");
+    }
+    
+    let sh = elem.scrollHeight - elem.clientHeight;
+    if(sh<=0)sh=1;
+    let st = elem.scrollTop;
+    let percent = Math.floor(st / sh * 100);
     tilt = (50 - percent) * 0.5;
 }
 function setAllColors(col, addToLast=false){
@@ -613,7 +613,9 @@ function setAllColors(col, addToLast=false){
 function addEvents(){
     window.addEventListener('load', resize);
     window.addEventListener('resize', resize);
-    window.addEventListener('scroll', scrolled);
+    getById("scrollable").addEventListener('scroll', scrolled);
+    getById("fakeScroll").addEventListener('scroll', scrolled);
+    
 
     let btns = document.getElementsByClassName("btn");
     for (let i = 0; i < btns.length; i++) {
@@ -623,12 +625,25 @@ function addEvents(){
     menu.addEventListener('touchstart', buttonTouchStart);
     menu.addEventListener('touchend', buttonTouchEnd);
 }
-
 function getById(str){
     return document.getElementById(str);
 }
 function buttonClicked(sender) {
     let pan, pans, btns;
+
+    if(sender.id=="updown"){
+        let rotated = sender.classList.contains("rotate");
+        if(rotated){
+            sender.classList.remove("rotate");
+            menu.classList.remove("active");
+            getById("fakeScroll").style.display = "block";
+        }else{
+            menu.style.height = (window.innerHeight - 110) + 'px';
+            sender.classList.add("rotate");
+            menu.classList.add("active");
+            getById("fakeScroll").style.display = "none";
+        }
+    }
 
     if (sender.classList.contains("tab")){
         pans = document.getElementsByClassName("page");

@@ -4,99 +4,108 @@
         <title>Star</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#000000">
         <link type="image/vnd.microsoft.icon" rel="icon" href="favicon.ico">
         <link type="text/css" rel="stylesheet" href="main.css">
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
-        <script type="text/javascript" src="main.min.js" defer></script>
+        <script type="text/javascript" src="main.js" defer></script>
     </head>
     <body> 
-        <div id="header">
+        <div id="background">
             <canvas id="star" height="500px" width="500px"></canvas>
         </div>
-        
-        <div id="menu">
-            
-            <button class="btn tab active" id="bColors">Colors</button><button class="btn tab" id="bAnimations">Animations</button>
-            <div class="page" id="pColors" style="display:block">
-                <button class="btn col" id="bBlack">Black</button>
-                <button class="btn col" id="bWhite">White</button>
-                <button class="btn col" id="bRed">Red</button>
-                <button class="btn col" id="bOrange">Orange</button>
-                <button class="btn col" id="bYellow">Yellow</button>
-                <button class="btn col" id="bGreen">Green</button>
-                <button class="btn col" id="bCyan">Cyan</button>
-                <button class="btn col" id="bBlue">Blue</button>
-                <button class="btn col" id="bPurple">Purple</button>
-                <button class="btn col" id="bMagenta">Magenta</button>   
-                <button class="btn sub" id="bCp">Color Picker</button>
-                <div class="page panel" id="pCp">
-                    <div id="cpBgH">
-                        <input type="range" min="-180" max="180" step="0.5" value="30" oninput="cpInputRange()" class="cpRan" id="cpRH">					
-                    </div>
-                    <div id="cpBgS2">
-                        <div id="cpBgS">
-                            <input type="range" min="0" max="100" step="0.5" value="100" oninput="cpInputRange()" class="cpRan" id="cpRS">
-                        </div>
-                    </div>
-                    <div id="cpBgL2">
-                        <div id="cpBgL">
-                            <input type="range" min="0" max="100" step="0.5" value="50" oninput="cpInputRange()" class="cpRan" id="cpRL">
-                        </div>
-                    </div>
-                    <div class="cpHSL">H:</div><input type="number" min="-180" max="180" step = "0.5" oninput="cpInputNumber()" class="cpNum" id="cpNH">
-                    <div class="cpHSL">S:</div><input type="number" min="0" max="100" step = "0.5" oninput="cpInputNumber()" class="cpNum" id="cpNS">
-                    <div class="cpHSL">L:</div><input type="number" min="0" max="100" step = "0.5" oninput="cpInputNumber()" class="cpNum" id="cpNL">
-                    <button class="btn col" id="bCpSet">Set</button>
-                </div>             
-            </div>
-
-            <div class="page" id="pAnimations">                
-                <button class="btn sub" id="bRainbow">Rainbow</button>
-                <div class="page panel" id="pRainbow">
-                    <button class="btn" id="bRainbowHor">Horizontal</button>
-                    <button class="btn" id="bRainbowVer">Vertical</button>
-                    <button class="btn" id="bRainbowAll">All</button>
-                </div>
-                <button class="btn sub" id="bFade">Fade</button>
-                <div class="page panel" id="pFade">
-                    <button class="btn" id="bFade2">Last 2 Colors</button>
-                    <button class="btn" id="bFade3">Last 3 Colors</button>
-                    <button class="btn" id="bFade4">Last 4 Colors</button>
-                </div>
-                <button class="btn sub" id="bUp">Up</button>
-                <div class="page panel" id="pUp">
-                    <button class="btn" id="bUp2">Last 2 Colors</button>
-                    <button class="btn" id="bUp3">Last 3 Colors</button>
-                    <button class="btn" id="bUp4">Last 4 Colors</button>
-                </div>
-                <button class="btn sub" id="bWalk">Walk</button>
-                <div class="page panel" id="pWalk">
-                    <button class="btn" id="bWalk1">1 Jag</button>
-                    <button class="btn" id="bWalk2">2 Jags</button>
-                </div>
-                <button class="btn sub" id="bRnd">Random Jags</button>
-                <div class="page panel" id="pRnd">
-                    <button class="btn" id="bRnd2">Last 2 Colors</button>
-                    <button class="btn" id="bRnd3">Last 3 Colors</button>
-                    <button class="btn" id="bRnd4">Last 4 Colors</button>
-                </div>
-                <button class="btn sub" id="bSpiral">Spiral</button>
-                <div class="page panel" id="pSpiral">
-                    <button class="btn" id="bSpiral2">Last 2 Colors</button>
-                    <button class="btn" id="bSpiral3">Last 3 Colors</button>
-                    <button class="btn" id="bSpiral4">Last 4 Colors</button>
-                </div>
-                <div class="splitter"></div>
-                <div class="speed">Speed</div>
-                <div class="speedBg">
-                    <input type="range" min="0" max="1000" step="1" value="200" oninput="speedInRange()" id="speedRan">
-                    <input type="number" min="0" max="1000" step = "1" value="200" oninput="speedInNum()" id="speedNum">
-                </div>
-            </div>
-            <div id="footer">
-                <a href="setup.html">Setup Page</a>
-            </div>    
+        <div id="fakeScroll" class="scroll">
+                <p id="fakeItem"></p>
         </div>
+        <div id="menu" class="active">
+            <table id="tabtable">
+                <tr>
+                    <td><button class="btn tab active" id="bColors">Colors</button></td>
+                    <td><button class="btn tab" id="bAnimations">Animations</button></td>
+                </tr>
+            </table>
+            <div class="splitter"></div>
+            <div id="scrollable" class="scroll">
+                <div class="page" id="pColors" style="display:block">
+                    <button class="btn col" id="bBlack">Black</button>
+                    <button class="btn col" id="bWhite">White</button>
+                    <button class="btn col" id="bRed">Red</button>
+                    <button class="btn col" id="bOrange">Orange</button>
+                    <button class="btn col" id="bYellow">Yellow</button>
+                    <button class="btn col" id="bGreen">Green</button>
+                    <button class="btn col" id="bCyan">Cyan</button>
+                    <button class="btn col" id="bBlue">Blue</button>                
+                    <button class="btn col" id="bPurple">Purple</button>
+                    <button class="btn col" id="bMagenta">Magenta</button>   
+                    <button class="btn sub" id="bCp">Color Picker</button>
+                    <div class="page panel" id="pCp">
+                        <div id="cpBgH">
+                            <input type="range" min="-180" max="180" step="0.5" value="30" oninput="cpInputRange()" class="cpRan" id="cpRH">					
+                        </div>
+                        <div id="cpBgS2">
+                            <div id="cpBgS">
+                                <input type="range" min="0" max="100" step="0.5" value="100" oninput="cpInputRange()" class="cpRan" id="cpRS">
+                            </div>
+                        </div>
+                        <div id="cpBgL2">
+                            <div id="cpBgL">
+                                <input type="range" min="0" max="100" step="0.5" value="50" oninput="cpInputRange()" class="cpRan" id="cpRL">
+                            </div>
+                        </div>
+                        <div class="cpHSL">H:</div><input type="number" min="-180" max="180" step = "0.5" oninput="cpInputNumber()" class="cpNum" id="cpNH">
+                        <div class="cpHSL">S:</div><input type="number" min="0" max="100" step = "0.5" oninput="cpInputNumber()" class="cpNum" id="cpNS">
+                        <div class="cpHSL">L:</div><input type="number" min="0" max="100" step = "0.5" oninput="cpInputNumber()" class="cpNum" id="cpNL">
+                        <button class="btn col" id="bCpSet">Set</button>
+                    </div>             
+                </div>
+                <div class="page" id="pAnimations">                
+                    <button class="btn sub" id="bRainbow">Rainbow</button>
+                    <div class="page panel" id="pRainbow">
+                        <button class="btn" id="bRainbowHor">Horizontal</button>
+                        <button class="btn" id="bRainbowVer">Vertical</button>
+                        <button class="btn" id="bRainbowAll">All</button>
+                    </div>
+                    <button class="btn sub" id="bFade">Fade</button>
+                    <div class="page panel" id="pFade">
+                        <button class="btn" id="bFade2">Last 2 Colors</button>
+                        <button class="btn" id="bFade3">Last 3 Colors</button>
+                        <button class="btn" id="bFade4">Last 4 Colors</button>
+                    </div>
+                    <button class="btn sub" id="bUp">Up</button>
+                    <div class="page panel" id="pUp">
+                        <button class="btn" id="bUp2">Last 2 Colors</button>
+                        <button class="btn" id="bUp3">Last 3 Colors</button>
+                        <button class="btn" id="bUp4">Last 4 Colors</button>
+                    </div>
+                    <button class="btn sub" id="bWalk">Walk</button>
+                    <div class="page panel" id="pWalk">
+                        <button class="btn" id="bWalk1">1 Jag</button>
+                        <button class="btn" id="bWalk2">2 Jags</button>
+                    </div>
+                    <button class="btn sub" id="bRnd">Random Jags</button>
+                    <div class="page panel" id="pRnd">
+                        <button class="btn" id="bRnd2">Last 2 Colors</button>
+                        <button class="btn" id="bRnd3">Last 3 Colors</button>
+                        <button class="btn" id="bRnd4">Last 4 Colors</button>
+                    </div>
+                    <button class="btn sub" id="bSpiral">Spiral</button>
+                    <div class="page panel" id="pSpiral">
+                        <button class="btn" id="bSpiral2">Last 2 Colors</button>
+                        <button class="btn" id="bSpiral3">Last 3 Colors</button>
+                        <button class="btn" id="bSpiral4">Last 4 Colors</button>
+                    </div>
+                    <div class="splitter"></div>
+                    <div class="speed">Speed</div>
+                    <div>
+                        <input type="range" min="0" max="1000" step="1" value="200" oninput="speedInRange()" id="speedRan">
+                        <input type="number" min="0" max="1000" step = "1" value="200" oninput="speedInNum()" id="speedNum">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn rotate" id="updown"></button>
+        <a id="settings" href="setup.html"></a>
+
     </body>
 </html>
 

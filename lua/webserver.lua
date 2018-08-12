@@ -7,6 +7,7 @@ local handle_request=function(conn,request)
 		css="text/css",
 		ico="image/vnd.microsoft.icon",
 		png="image/png",
+		svg="image/svg+xml",
 		js="application/javascript"}
 
 	local responseTxt=
@@ -105,10 +106,16 @@ local handle_request=function(conn,request)
 		sendFile(conn, responseTxt, "main.html")
 	elseif(path=="/main.css")then
 		setCt(ct.css)
-		sendFile(conn, responseTxt, "main.css")
-	elseif(path=="/main.min.js")then
+		sendFile(conn, responseTxt, "main.min.css")
+	elseif(path=="/main.js")then
 		setCt(ct.js)
 		sendFile(conn, responseTxt, "main.min.js", currState)
+	elseif(path=="/arrow.svg")then
+		setCt(ct.svg)
+		sendFile(conn, responseTxt, "arrow.svg")
+	elseif(path=="/settings.svg")then
+		setCt(ct.svg)
+		sendFile(conn, responseTxt, "settings.svg")
 	elseif(path=="/apple-touch-icon.png")then
 		setCt(ct.png)
 		sendFile(conn, responseTxt, "apple-touch-icon.png")
