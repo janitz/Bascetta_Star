@@ -47,9 +47,15 @@ body{
 #menu.active{
     animation: moveUp 0.3s linear;
 }
+@keyframes delay {
+    0% {max-height: 0;}
+    99% {max-height: 0;}
+    100% {max-height: none;}
+}
 #fakeScroll{
     display: none;
     z-index: 2;
+    animation: delay 0.35s linear ;
 }
 #fakeItem{
     height: 150%;
