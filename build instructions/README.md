@@ -23,7 +23,9 @@
   - all GND together (esp8266, ws2812, supply)<br>
   - esp8266 (WeMos D1 Mini) D4 to DI of led1<br>
   - DO of led1 to DI of led2<br>
-    DO of led3 to DI of led3<br>
+    DO of led2 to DI of led3<br>
     ...<br>
     DO of led19 to DI of led20<br>
+ <img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/circuit.png" height="290"><br>
  <img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/bascetta_star_hw.jpg" height="300"><br><br>
+
