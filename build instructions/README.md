@@ -28,4 +28,30 @@
     DO of led19 to DI of led20<br>
  <img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/circuit.png" height="290"><br>
  <img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/bascetta_star_hw.jpg" height="300"><br><br>
-
+ - use one of these to flash the firmware to the esp8266<br>
+   https://github.com/espressif/esptool<br>
+   https://github.com/nodemcu/nodemcu-flasher<br><br>
+ - use Esplorer to load the files from <br>
+   /html and /lua to the esp8266<br>
+   <img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/files_on_esp8266.png" width="1600px"><br>
+   Files on esp8266:<br> 
+   - init.lua -> UPLOAD THIS FILE LAST<br> 
+   - webserver.lua -> compile to .lc and delete<br> 
+   - animations.lua -> compile to .lc and delete<br> 
+   - AP_setup.lua -> compile to .lc and delete<br> 
+   - set_wifi.lua -> compile to .lc and delete<br> 
+   - wifi.txt<br><br>
+   - apple-touch-icon.png<br> 
+   - arrow.svg<br> 
+   - favicon.ico<br>
+   - main.html<br> 
+   - main.min.css<br> 
+   - main.min.js<br> 
+   - settings.svg<br> 
+   - setup.html<br> 
+   - setup.css<br> 
+   - setup.js<br><br>
+ - put everything together<br>
+ <img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/rainbow_0.jpeg" width="250" height="250"><br>
+   
+   
