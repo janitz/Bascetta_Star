@@ -18,10 +18,10 @@
  <img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/inside.jpg" height="300"><br><br>
 - glue the ws2812 leds onto the star like this<br>
  <img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/leds_glued.jpg" height="300"><br><br>
-- solder the leds together<br>
-  - all + together (esp8266, ws2812, supply)<br>
-  - all - together (esp8266, ws2812, supply)<br>
-  - esp8266 (Wemos D1 Mini) D4 to DI of led1<br>
+- solder everything together<br>
+  - all +5V together (esp8266, ws2812, supply)<br>
+  - all GND together (esp8266, ws2812, supply)<br>
+  - esp8266 (WeMos D1 Mini) D4 to DI of led1<br>
   - DO of led1 to DI of led2<br>
     DO of led3 to DI of led3<br>
     ...<br>

@@ -3,7 +3,7 @@ This project is about a white origami star for christmas.<br>
 The star is folded out of 30 white papers.<br>
 If you want to fold your own star, just google "Bascetta star" for instructions.<br>
 To add colors, every jag has its own ws2812 led.<br>
-The leds are controlled by an esp8266.<br>
+The leds are controlled by an esp8266 (WeMos D1 Mini).<br>
 The UI is a webpage hosted on the esp8266.<br>
 
 Preview:
