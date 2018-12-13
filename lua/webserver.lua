@@ -88,7 +88,7 @@ local handle_request=function(conn,request)
 	if(_GET.ssid and _GET.pwd)then
 		ssid=unescape(_GET.ssid:gsub("+", " "))
 		pwd=unescape(_GET.pwd:gsub("+", " "))
-		dofile("set_wifi.lc")
+		run("save_wifi.lc")
 	end
 
 	if(_GET.restart=="now")then

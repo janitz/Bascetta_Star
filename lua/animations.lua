@@ -10,10 +10,10 @@ anim.lastCmd=""
 anim.colJag=nil
 anim.colBg=nil
 anim.lastColor={}
-anim.lastColor[1]={h=20000,s=1000,l=500}
-anim.lastColor[2]={h=240000,s=1000,l=500}
-anim.lastColor[3]={h=120000,s=1000,l=500}
-anim.lastColor[4]={h=0,s=0,l=0}
+anim.lastColor[1]={}
+anim.lastColor[2]={}
+anim.lastColor[3]={}
+anim.lastColor[4]={}
 anim.concurentJags = {18,19,20,16,17,11,12,13,14,15,6,7,8,9,10,4,5,1,2,3}
 anim.neighborJags = {
     {2,5,6},
@@ -118,7 +118,10 @@ anim.setCurrState=function()
     str=str..'setSpeed('..animSpeed..');\r\n'
     
     currState=str
+    
 end
+
+run("load_state.lc")
 
 ws2812.init()
 ledBuffer = ws2812.newBuffer(21, 3)
@@ -130,11 +133,13 @@ ledBuffer:fill(0,0,0)
 tmr.alarm(1,10,2, function()--15ms ~60Hz
     if(animSpeed~=speedLast)then
         speedLast=animSpeed
-        anim.setCurrState()        
+        anim.setCurrState()  
+        run("save_state.lc")      
     end
     if(anim.lastCmd~=cmd)then
         anim.lastCmd=cmd
         anim.setCurrState()
+        run("save_state.lc")
     end
     animCnt = animCnt + animSpeed
     if(animCnt>=360000)then animCnt=0 end
@@ -145,6 +150,7 @@ tmr.alarm(1,10,2, function()--15ms ~60Hz
             table.remove(anim.lastColor, 4)
             table.insert(anim.lastColor, 1, {h=newCol.h,s=newCol.s,l=newCol.l})
             anim.setCurrState()
+            run("save_state.lc")
             animCnt=0
         end
     elseif(cmd=="bRainbowVer")then
