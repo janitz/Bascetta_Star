@@ -1,5 +1,5 @@
 //var currCon="This device is currently not connectet to any access point.";
-//var ssids=["wlanName"];
+//var ssids=["wlanName1","wlanName2"];
 
 function showCurrentConnection(){
 	if(currCon.length > 0){
