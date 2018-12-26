@@ -90,14 +90,8 @@ local handle_request=function(conn,request)
 		pwd=unescape(_GET.pwd:gsub("+", " "))
 		run("save_wifi.lc")
 	end
-
-	if(_GET.restart=="now")then
-		node.restart()	
-	end
-
-	if(_GET.speed)then
-		animSpeed=tonumber(_GET.speed)	
-	end
+	if(_GET.restart=="now")then node.restart()end
+	if(_GET.speed)then animSpeed=tonumber(_GET.speed)end
 	
 	path = path:lower()
 	
@@ -120,32 +114,27 @@ local handle_request=function(conn,request)
 		setCt(ct.png)
 		sendFile(conn, responseTxt, "apple-touch-icon.png")
 	elseif(path=='/setup' or path=="/setup.html")then
-		
 		wifi.sta.getap(setAps)
-		
 		setCt(ct.html)
 		sendFile(conn, responseTxt, "setup.html")
-		
 	elseif(path=="/setup.css")then
 		setCt(ct.css)
-		sendFile(conn, responseTxt, "setup.css")
+		sendFile(conn, responseTxt, "setup.min.css")
 	elseif(path=="/setup.js")then
 		setCt(ct.js)
-
 		local ip = wifi.sta.getip()
 		if(ip ~=nil )then
 			responseTxt=responseTxt..'var currCon="SSID: '..ssid..'<br>IP: '..ip..'";\r\n'
 		else
 			responseTxt=responseTxt..'var currCon="This device is currently not connectet to any access point.";\r\n'
-		end
-				
+		end		
 		local ssidStr = 'var ssids=['
 		for k, v in pairs(aps) do	
 				ssidStr=ssidStr..'"'..k..'",'
 		end
 		ssidStr=string.gsub(ssidStr..'];','",]','"]').."\r\n"
 		responseTxt=responseTxt..ssidStr
-		sendFile(conn, responseTxt, "setup.js")
+		sendFile(conn, responseTxt, "setup.min.js")
 	elseif path=='/favicon.ico' then
 		setCt(ct.ico)
 		sendFile(conn, responseTxt, "favicon.ico")	 
@@ -153,9 +142,7 @@ local handle_request=function(conn,request)
 		responseTxt = "HTTP/1.0 404 Not Found\r\n\r\nPath '" .. path .. "' not found"
 		conn:send(responseTxt, closeConn)
 	end
-
-	collectgarbage()
-				
+	collectgarbage()	
 end
 
 srv=net.createServer(net.TCP,30)

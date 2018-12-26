@@ -17,9 +17,9 @@ run=function(s)
 	end
 end
 
-print("waiting 0.1s...")
+print("waiting 0.2s...")
 print("use tmr.stop(0) to stop the init.lua")
-tmr.alarm(0,100,0,function()
+tmr.alarm(0,200,0,function()
 	print("starting...")
 	run("AP_setup.lc")
 	run("animations.lc")
