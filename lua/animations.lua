@@ -112,9 +112,9 @@ anim.setCurrState=function()
 		str=str..anim.toDec(anim.lastColor[i].s*100)..','
 		str=str..anim.toDec(anim.lastColor[i].l*100)..'),'
 	end
-	str=string.gsub(str..'];',',];','];').."\r\n"
-	str=str..'cmd="'..cmd..'";\r\n'
-	str=str..'setSpeed('..animSpeed..');\r\n'
+	str=string.gsub(str..'];',',];','];')
+	str=str..'cmd="'..cmd..'";'
+	str=str..'setSpeed('..animSpeed..');'
 	
 	currState=str
 	

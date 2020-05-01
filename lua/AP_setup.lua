@@ -1,6 +1,6 @@
 ip_cfg =
 	{
-		ip="192.168.0.1",
+		ip="192.168.11.1",
 		netmask="255.255.255.0",
 		gateway="192.168.0.1"
 	}
@@ -22,6 +22,6 @@ end
 
 wifi.sta.config(ssid, pwd, 1)
 
-wifi.ap.config({ssid='Star(192.168.0.1)'})
+wifi.ap.config({ssid='Star(192.168.11.1)'})
 wifi.ap.setip(ip_cfg)
 wifi.ap.dhcp.start() -- important!
