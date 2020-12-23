@@ -32,25 +32,35 @@
    https://github.com/espressif/esptool<br>
    https://github.com/nodemcu/nodemcu-flasher<br><br>
  - use Esplorer to load the files from <br>
-   /html and /lua to the esp8266<br>
+   /lua, /config and /html to the esp8266 <br>
+   order is important <br>
    <img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/files_on_esp8266.png" width="1600px"><br>
-   Files on esp8266:<br> 
-   - init.lua -> UPLOAD THIS FILE LAST<br> 
-   - webserver.lua -> compile to .lc and delete<br> 
-   - animations.lua -> compile to .lc and delete<br> 
-   - AP_setup.lua -> compile to .lc and delete<br> 
-   - set_wifi.lua -> compile to .lc and delete<br> 
-   - wifi.txt<br><br>
-   - apple-touch-icon.png<br> 
-   - arrow.svg<br> 
-   - favicon.ico<br>
-   - main.html<br> 
-   - main.min.css<br> 
-   - main.min.js<br> 
-   - settings.svg<br> 
-   - setup.html<br> 
-   - setup.css<br> 
-   - setup.js<br><br>
+ - upload lua files (except init.lua) to esp8266 (upload button)<br> 
+   - /lua/animations.lua <br> 
+   - /lua/AP_setup.lua <br> 
+   - /lua/compile.lua <br> 
+   - /lua/save_state.lua <br> 
+   - /lua/save_wifi.lua <br>
+   - /lua/webserver.lua <br><br>
+ - run compile.lua <br>
+   - reload button (right side) <br>
+   - click on compile.lua <br>
+     this compiles all the needed .lua files to .lc and deletes the .lua afterwards
+ - upload files to esp8266 (upload button)<br> 
+   - /config/wifi.txt<br>
+   - /config/state.txt<br>
+   - /config/map.txt<br>
+   - /html/apple-touch-icon.png<br> 
+   - /html/arrow.svg<br> 
+   - /html/favicon.ico<br>
+   - /html/main.html<br> 
+   - /html/main.min.css<br> 
+   - /html/main.min.js<br> 
+   - /html/settings.svg<br> 
+   - /html/setup.html<br> 
+   - /html/setup.min.css<br> 
+   - /html/setup.min.js<br>
+   - /lua/init.lua <br><br>
  - put everything together<br>
  <img src="https://raw.githubusercontent.com/janitz/Bascetta_Star/master/pictures/rainbow_0.jpeg" width="250" height="250"><br>
    
