@@ -44,7 +44,7 @@
    - /lua/webserver.lua <br><br>
  - run compile.lua <br>
    - reload button (right side) <br>
-   - click on compile.lua <br>
+   - click on compile.lua  (or type `dofile("compile.lua")`)<br>
      this compiles all the needed .lua files to .lc and deletes the .lua afterwards
  - upload files to esp8266 (upload button)<br> 
    - /config/wifi.txt<br>
